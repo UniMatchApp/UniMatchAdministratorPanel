@@ -25,7 +25,8 @@
               "src/favicon.ico"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
             ],
             "scripts": []
           },
@@ -184,5 +185,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "6ad83121-ca39-41ae-aa82-2d6330d1335e"
   }
 }

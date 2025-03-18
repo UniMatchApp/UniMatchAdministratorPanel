@@ -2,16 +2,22 @@
   <div class="menu-content">
     <div class="left-side-container">
       <img (click)="navigateTo('/')"
-           src="/assets/img/logo_pamn.png"
-           alt="Zenit logo" class="Logo">
+           src="/assets/img/logo_unimatch.png"
+           alt="Unimatch user manager" class="logo">
+      <h1>UNIMATCH USER MANAGER</h1>
+
     </div>
+
     <div class="right-side-container">
-      <div>
-        <img src="" alt="">
-      </div>
-      <p>{{ adminName }}</p>
+      <img src="" alt="User photo" class="user-photo">
+      <p (click)="toggleDropdown()">
+        {{ adminName }}
+        <i class="fas fa-chevron-down"></i>
+      </p>
+
+      <ul *ngIf="isDropdownOpen" class="dropdown-menu">
+        <li (click)="logout()">Log out</li>
+      </ul>
     </div>
-
   </div>
-
 </header>

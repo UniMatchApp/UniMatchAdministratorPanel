@@ -40,7 +40,7 @@ time, mark, audio, video {
   padding: 0;
   border: 0;
   font-size: 100%;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inria Sans', sans-serif;
   vertical-align: baseline;
 }
 
@@ -87,7 +87,7 @@ table {
 
 
 .body{
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inria Sans', sans-serif;
 }
 
 a:-webkit-any-link {
