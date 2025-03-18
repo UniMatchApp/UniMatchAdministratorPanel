@@ -1,0 +1,7 @@
+export enum SexualOrientation {
+  HETEROSEXUAL = "HETEROSEXUAL",
+  HOMOSEXUAL = "HOMOSEXUAL",
+  BISEXUAL = "BISEXUAL",
+  ASEXUAL = "ASEXUAL",
+  OTHER = "OTHER"
+}

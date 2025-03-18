@@ -1,0 +1,6 @@
+export enum Habits {
+  NEVER = "NEVER",
+  OCCASIONALLY = "OCCASIONALLY",
+  FREQUENTLY = "FREQUENTLY",
+  DAILY = "DAILY"
+}
