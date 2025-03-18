@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,4 +9,10 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
 
+  @Input() adminName: String = 'Juan Antonio'
+  constructor(private router: Router) {}
+
+  navigateTo(path: string) {
+    this.router.navigate([path]);
+  }
 }
