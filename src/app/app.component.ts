@@ -9,6 +9,7 @@ import {
   selector: 'app-root',
   imports: [RouterOutlet, HeaderComponent, AdministratorSideBarComponent],
   templateUrl: './app.component.html',
+  standalone: true,
   styleUrl: './app.component.css'
 })
 export class AppComponent {

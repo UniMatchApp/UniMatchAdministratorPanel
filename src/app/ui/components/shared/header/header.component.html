@@ -5,14 +5,13 @@
            src="/assets/img/logo_unimatch.png"
            alt="Unimatch user manager" class="logo">
       <h1>UNIMATCH USER MANAGER</h1>
-
     </div>
 
     <div class="right-side-container">
       <img src="" alt="User photo" class="user-photo">
       <p (click)="toggleDropdown()">
         {{ adminName }}
-        <i class="fas fa-chevron-down"></i>
+        <i class="fas fa-chevron-down" [class.rotate]="isDropdownOpen"></i>
       </p>
 
       <ul *ngIf="isDropdownOpen" class="dropdown-menu">
