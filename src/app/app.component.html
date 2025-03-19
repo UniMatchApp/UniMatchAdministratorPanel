@@ -1,9 +1,10 @@
-<link rel="stylesheet" href="ui/components/shared/header/header.component.css">
-<body>
-  <app-header></app-header>
-  <div class="container">
-    <app-administrator-side-bar></app-administrator-side-bar>
-    <router-outlet></router-outlet>
+<div class="app-container">
+<app-header></app-header>
+<div class="container">
+  <app-administrator-side-bar></app-administrator-side-bar>
+  <div class="content">
+    <router-outlet class="router-outlet"></router-outlet>
   </div>
-</body>
+</div>
+</div>
 

@@ -34,7 +34,7 @@ header {
 }
 
 .dropdown-menu {
-  background: var(--mainColor);
+  background: var(--mainColorBackground);
   border-radius: 5px;
   text-align: center;
   list-style: none;

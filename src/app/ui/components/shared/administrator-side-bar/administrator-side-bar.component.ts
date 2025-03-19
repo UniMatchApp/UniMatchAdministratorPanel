@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 
 @Component({
   selector: 'app-administrator-side-bar',
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './administrator-side-bar.component.html',
   standalone: true,
   styleUrl: './administrator-side-bar.component.css'

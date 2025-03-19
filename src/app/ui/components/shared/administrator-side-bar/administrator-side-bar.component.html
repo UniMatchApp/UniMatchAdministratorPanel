@@ -1,14 +1,14 @@
 <aside class="sidebar">
   <ul>
-    <li routerLink="/dashboard" routerLinkActive="active">
+    <li [routerLink]="['/admin/dashboard']" routerLinkActive="active">
       <i class="fas fa-chart-line"></i>
       <p>Dashboard</p>
     </li>
-    <li routerLink="/reports" routerLinkActive="active">
+    <li [routerLink]="['/admin/reports']" routerLinkActive="active">
       <i class="fas fa-flag"></i>
       <p>Reports</p>
     </li>
-    <li routerLink="/users" routerLinkActive="active">
+    <li [routerLink]="['/admin/users']" routerLinkActive="active">
       <i class="fas fa-user"></i>
       <p>Users</p>
     </li>
