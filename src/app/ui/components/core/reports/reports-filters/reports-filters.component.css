@@ -1,0 +1,66 @@
+.reports-filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  color: var(--mainTextWhite);
+}
+
+.filter-date {
+  display: flex;
+  justify-content: start;
+  gap: 10px;
+  align-items: center;
+}
+
+.filter-date-box{
+  background: var(--mainColorBackgroundOpacity);
+  color: var(--mainTextWhite);
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filter-date-box::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+.filter-type {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  gap: 10px;
+  align-items: center;
+}
+
+.filter-type-select {
+  background: var(--mainColorBackgroundOpacity);
+  color: var(--mainTextWhite);
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filter-type-select::-ms-expand option {
+  background: var(--mainColorBackgroundOpacity);
+  color: var(--mainTextWhite);
+}
+
+
+.sort-buttons-container {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+  align-items: center;
+}
+
+.sort-button{
+  background: var(--mainColorBackgroundOpacity);
+  color: var(--mainTextWhite);
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}

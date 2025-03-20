@@ -1,9 +1,26 @@
 .reports-container {
   display: flex;
-  flex-direction: column;
   flex:1;
   height: 100%;
-  align-items: center;
   justify-content: center;
   background: var(--mainColorBackground);
+}
+
+.reports-inside-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px;
+  margin: 20px;
+  gap: 10px;
+  background: var(--mainColor);
+}
+
+.table-pagination {
+  display: flex;
+  width: 100%;
+  flex: 1;
+  justify-content: end;
+  gap: 10px;
+  color: var(--mainTextWhite);
 }

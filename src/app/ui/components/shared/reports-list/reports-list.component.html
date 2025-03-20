@@ -1,0 +1,28 @@
+<table class="report-table-users">
+  <thead>
+      <tr>
+        <th>User Reporting</th>
+        <th>User Reported</th>
+        <th>Date</th>
+        <th>Reason</th>
+        <th>Explanation</th>
+        <th>Details</th>
+      </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let report of reports">
+      <td>
+        <img [src]="report.userReporting.avatar" alt="Avatar">
+        {{ report.userReporting.name }}<br> ({{ report.userReporting.email }})
+      </td>
+      <td>
+        <img [src]="report.userReported.avatar" alt="Avatar">
+        {{ report.userReported.name }}<br> ({{ report.userReported.email }})
+      </td>
+      <td>{{ report.date }}</td>
+      <td>{{ report.reason }}</td>
+      <td>{{ report.explanation }}</td>
+      <td>{{ report.details }}</td>
+    </tr>
+  </tbody>
+</table>

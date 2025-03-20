@@ -1,0 +1,27 @@
+.report-table-users {
+  width: 100%;
+  align-items: center;
+  border-collapse: collapse;
+}
+.report-table-users th, .report-table-users td {
+  padding: 20px;
+  text-align: center;
+  align-content: center;
+  color: var(--mainTextWhite);
+}
+
+.report-table-users th {
+  background-color: var(--mainColor);
+}
+
+.report-table-users td {
+  background-color: var(--mainColorBackgroundOpacity);
+  border-bottom: 1px solid var(--mainTextWhite);
+}
+
+.report-table-users img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
