@@ -11,18 +11,17 @@
   </thead>
   <tbody>
     <tr *ngFor="let report of reports">
-      <td>
-        <img [src]="report.userReporting.avatar" alt="Avatar">
-        {{ report.userReporting.name }}<br> ({{ report.userReporting.email }})
+      <td class="user-reporting" [routerLink]="['/user', report.reportingUser.id]">
+        <img [src]="report.reportingUser.avatar" alt="Avatar">
+        {{ report.reportingUser.name }}<br> ({{ report.reportingUser.email }})
       </td>
-      <td>
-        <img [src]="report.userReported.avatar" alt="Avatar">
-        {{ report.userReported.name }}<br> ({{ report.userReported.email }})
+      <td class="user-reported" [routerLink]="['/user', report.reportedUser.id]">
+        <img [src]="report.reportedUser.avatar" alt="Avatar">
+        {{ report.reportedUser.name }}<br> ({{ report.reportedUser.email }})
       </td>
-      <td>{{ report.date }}</td>
-      <td>{{ report.reason }}</td>
-      <td>{{ report.explanation }}</td>
-      <td>{{ report.details }}</td>
+      <!-- <td>{{ report.report. }}</td> -->
+      <td>{{ report.report.predefinedReason }}</td>
+      <td>{{ report.report.comment }}</td>
     </tr>
   </tbody>
 </table>

@@ -1,9 +1,11 @@
 import {Component, Input} from '@angular/core';
 import {NgForOf} from '@angular/common';
+import {RouterLink} from '@angular/router';
+import {ReportRow} from '../../../screens/core/reports/reports.component';
 
 interface Report {
-  userReporting: { name: string; email: string; avatar: string };
-  userReported: { name: string; email: string; avatar: string };
+  userReporting: { name: string; email: string; avatar: string; id: string };
+  userReported: { name: string; email: string; avatar: string; id: string };
   date: string;
   reason: string;
   explanation: string;
@@ -13,7 +15,8 @@ interface Report {
 @Component({
   selector: 'app-reports-list',
   imports: [
-    NgForOf
+    NgForOf,
+    RouterLink
   ],
   templateUrl: './reports-list.component.html',
   standalone: true,
@@ -21,21 +24,5 @@ interface Report {
 })
 export class ReportsListComponent {
 
-  @Input() reports: Report[] = [
-    {
-      userReporting: { name: 'Juana María Rodríguez', email: 'juanamaria@gmail.com', avatar: 'https://via.placeholder.com/40' },
-      userReported: { name: 'Pepito Sánchez Méndez', email: 'pepitosanchez@gmail.com', avatar: 'https://via.placeholder.com/40' },
-      date: '02/09/2023',
-      reason: 'Misbehavior',
-      explanation: 'Explicit Content',
-      details: 'He sent me explicit content.'
-    },{
-      userReporting: { name: 'Juana María Rodríguez', email: 'juanamaria@gmail.com', avatar: 'https://via.placeholder.com/40' },
-      userReported: { name: 'Pepito Sánchez Méndez', email: 'pepitosanchez@gmail.com', avatar: 'https://via.placeholder.com/40' },
-      date: '02/09/2023',
-      reason: 'Misbehavior',
-      explanation: 'Explicit Content',
-      details: 'He sent me explicit content.'
-    }
-  ];
+  @Input() reports: ReportRow[] = [];
 }
