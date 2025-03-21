@@ -3,30 +3,30 @@
   border: 1px solid var(--mainTextWhite);
 }
 
+h2 {
+  font-size: x-large;
+}
+
 .user-stats-inside-container{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px;
-  gap: 10px;
+  padding: 20px;
+  gap: 30px;
   color: var(--mainTextWhite);
 }
 
 .user-stats-table {
-  width: 100%;
   align-items: center;
-  border-collapse: collapse;
 }
+
 .user-stats-table th, .user-stats-table td {
-  padding: 20px;
+  padding: 10px;
   text-align: center;
   align-content: center;
   color: var(--mainTextWhite);
 }
 
-.user-stats-table th {
-  background-color: var(--mainColor);
-}
 
 .user-stats-table td {
   background-color: var(--mainColorBackgroundOpacity);

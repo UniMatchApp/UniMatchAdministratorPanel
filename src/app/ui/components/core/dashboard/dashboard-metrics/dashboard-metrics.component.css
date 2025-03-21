@@ -12,9 +12,10 @@
 
 .filter-date {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   gap: 10px;
   align-items: center;
+  width: 100%;
 }
 
 .filter-date-box{
@@ -48,5 +49,17 @@
   padding: 10px;
   gap: 10px;
   color: var(--mainTextWhite);
-  border-radius: 5px;
+  border-radius: 15px;
 }
+.dashboard-metric-title {
+  font-size: x-large;
+}
+.dashboard-metric-value {
+  font-size: xx-large;
+  font-weight: bolder;
+}
+
+.dashboard-metric-percentage {
+  font-size: large;
+}
+
