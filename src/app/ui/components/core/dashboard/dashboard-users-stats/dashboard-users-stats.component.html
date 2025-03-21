@@ -1,0 +1,24 @@
+<div class="user-stats-container">
+  <div class="user-stats-inside-container">
+    <div class="user-stats-header">
+      <h2>{{ title }}</h2>
+    </div>
+    <img *ngIf="image" [src]="image" alt="user-stats-image" />
+    <div class="user-stats-table">
+      <table>
+        <thead>
+        <tr>
+          <th *ngFor="let column of columns">{{ column }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let row of table">
+          <td>{{ row.stat }}</td>
+          <td>{{ row.users }}</td>
+          <td>{{ row.actives }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

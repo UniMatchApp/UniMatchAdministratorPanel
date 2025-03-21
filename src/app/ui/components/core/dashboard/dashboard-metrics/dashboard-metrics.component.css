@@ -1,0 +1,52 @@
+.dashboard-metric-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  flex: 1;
+  padding: 10px;
+  color: var(--mainTextWhite);
+  background: var(--mainColor);
+  border: 1px solid var(--mainTextWhite);
+}
+
+.filter-date {
+  display: flex;
+  justify-content: start;
+  gap: 10px;
+  align-items: center;
+}
+
+.filter-date-box{
+  background: var(--mainColorBackgroundOpacity);
+  color: var(--mainTextWhite);
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filter-date-box::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+.dashboard-metrics{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 20px;
+  width: 100%;
+  gap: 10px;
+}
+
+.dashboard-metric-unit{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  gap: 10px;
+  color: var(--mainTextWhite);
+  border-radius: 5px;
+}
