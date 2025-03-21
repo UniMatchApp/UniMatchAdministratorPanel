@@ -1,8 +1,8 @@
 .report-table-users {
   width: 100%;
   align-items: center;
-  border-collapse: collapse;
 }
+
 .report-table-users th, .report-table-users td {
   padding: 20px;
   text-align: center;
@@ -23,9 +23,31 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  margin-right: 5px;
 }
 
 .user-reporting, .user-reported {
   cursor: pointer;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-info-avatar-name {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-name {
+  text-align: center;
+  font-weight: bold;
+}
+
+.user-email {
+  font-size: 0.9rem;
 }

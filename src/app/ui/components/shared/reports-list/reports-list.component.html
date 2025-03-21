@@ -1,27 +1,42 @@
 <table class="report-table-users">
   <thead>
-      <tr>
-        <th>User Reporting</th>
-        <th>User Reported</th>
-        <th>Date</th>
-        <th>Reason</th>
-        <th>Explanation</th>
-        <th>Details</th>
-      </tr>
+  <tr>
+    <th>User Reporting</th>
+    <th>User Reported</th>
+    <th>Date</th>
+    <th>Reason</th>
+    <th>Explanation</th>
+    <th>Details</th>
+  </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let report of reports">
-      <td class="user-reporting" [routerLink]="['/user', report.reportingUser.id]">
-        <img [src]="report.reportingUser.avatar" alt="Avatar">
-        {{ report.reportingUser.name }}<br> ({{ report.reportingUser.email }})
-      </td>
-      <td class="user-reported" [routerLink]="['/user', report.reportedUser.id]">
-        <img [src]="report.reportedUser.avatar" alt="Avatar">
-        {{ report.reportedUser.name }}<br> ({{ report.reportedUser.email }})
-      </td>
-      <!-- <td>{{ report.report. }}</td> -->
-      <td>{{ report.report.predefinedReason }}</td>
-      <td>{{ report.report.comment }}</td>
-    </tr>
+  <tr *ngFor="let report of reports">
+    <td class="user-reporting" [routerLink]="['/user', report.reportingUser.id]">
+      <div class="user-info">
+        <div class="user-info-avatar-name">
+          <img [src]="report.reportingUser.avatar" alt="Avatar">
+          <span class="user-name">{{ report.reportingUser.name }}</span>
+        </div>
+        <div class="user-email">{{ report.reportingUser.email }}</div>
+      </div>
+    </td>
+
+    <td class="user-reported" [routerLink]="['/user', report.reportedUser.id]">
+      <div class="user-info">
+        <div class="user-info-avatar-name">
+          <img [src]="report.reportedUser.avatar" alt="Avatar">
+          <span class="user-name">{{ report.reportedUser.name }}</span>
+        </div>
+        <div class="user-email">{{ report.reportedUser.email }}</div>
+      </div>
+    </td>
+
+    <td>23/02/2024</td>
+
+    <td>{{ report.report.predefinedReason }}</td>
+    <td>{{ report.report.comment }}</td>
+
+    <td>Fotos de shrek</td>
+  </tr>
   </tbody>
 </table>
