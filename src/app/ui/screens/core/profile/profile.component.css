@@ -1,0 +1,16 @@
+.profile-container{
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  background: var(--mainColorBackground);
+}
+
+.profile-inside-container{
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  margin: 20px;
+  gap: 10px;
+  background: var(--mainColor);
+}
