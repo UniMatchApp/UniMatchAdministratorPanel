@@ -5,6 +5,7 @@ export interface UserService {
   login(email: string, password: string): Promise<void>;
   logout(): Promise<void>;
   getCurrentUser(): Promise<User>;
+  getAllUsers(): Promise<User[]>;
   getReports(): Promise<ReportedUser[]>;
   getUserReports(): Promise<ReportedUser[]>;
 }

@@ -1,0 +1,41 @@
+<table class="users-table">
+  <thead>
+  <tr>
+    <th>
+      <div class="select-all-users-input" >
+        <app-checkbox-input
+          (change)="toggleSelectAll()"
+          [checked]="selectAll">
+        </app-checkbox-input>
+        <span>Usuario</span>
+      </div>
+    </th>
+    <th>Reportes</th>
+    <th>Estado</th>
+    <th>Registrado</th>
+  </tr>
+  </thead>
+  <tbody>
+  <!-- TODO ADD PAGINATION -->
+  <tr *ngFor="let user of users" (click)="toggleUserSelection(user)" [class.selected]="selectedUsers.includes(user)">
+    <td>
+      <div style="display: flex; flex-direction: row; align-items: center; gap: 10px">
+        <app-checkbox-input
+        [checked]="selectedUsers.includes(user)"
+        (change)="toggleUserSelection(user)"
+      ></app-checkbox-input>
+        <div class="user-info">
+          <img [src]="user.User.avatar" alt="Avatar" class="user-avatar">
+          <div class="user-details">
+            <span class="user-name">{{ user.User.name }}</span>
+            <span class="user-email">{{ user.User.email }}</span>
+          </div>
+        </div>
+      </div>
+    </td>
+    <td> {{user.Reported}} </td>
+    <td> {{user.Status}} </td>
+    <td> {{formatDate(user.RegistrationDate)}} </td>
+  </tr>
+  </tbody>
+</table>

@@ -1,8 +1,24 @@
 <div class="users-container">
   <div class="dashboard-inside-container">
     <app-dashboard-metrics [metrics]="metrics"></app-dashboard-metrics>
-    <div class="users-lists">
 
+    <div class="users-lists">
+      <div class="filters-container">
+        <div>
+          <h2>All users ( )</h2>
+        </div>
+        <div class="users-filters">
+          <div class="filter-buttons">
+            <button (click)="filterUsers('All')">View All</button>
+            <button (click)="filterUsers('Active')">Active</button>
+            <button (click)="filterUsers('Inactive')">Not Active</button>
+          </div>
+          <div class="search-filter">
+            <app-search-input (searchTextChange)="handleSearchChange($event)"></app-search-input>
+          </div>
+        </div>
+      </div>
+      <app-users-table [users]="filteredUsers"></app-users-table>
     </div>
   </div>
 </div>

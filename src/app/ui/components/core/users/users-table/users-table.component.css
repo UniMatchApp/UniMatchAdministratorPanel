@@ -1,0 +1,76 @@
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  cursor: none;
+  color: var(--mainTextWhite);
+}
+
+.users-table th:nth-last-child(-n+3),
+.users-table td:nth-last-child(-n+3) {
+  text-align: center;
+}
+
+thead{
+  background-color: var(--mainColorBackgroundOpacity);
+  color: var(--mainTextWhite);
+}
+
+tbody {
+
+  overflow-y: auto;
+}
+
+.select-all-users-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-details {
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+.user-email {
+  font-size: 0.9rem;
+}
+
+img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.users-table th, .users-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.users-table tr:hover {
+  background-color: #f1f1f1;
+  cursor: pointer;
+}
+
+
+.selected {
+  background-color: #d1e7fd !important;
+}

@@ -3,6 +3,7 @@ import {ReportedUser} from '../../domain/models/ReportedUser';
 
 export function createMockUsers() {
     return new User(
+        '1',
         new Date('2021-01-01'),
         'benitocamela@gmail.com',
         ['1', '2'],
@@ -20,6 +21,15 @@ export function createMockUsers() {
         ],
       true
     )
+}
+
+export function createMocksUsers() {
+  let users: User[] = [];
+
+  for (let i = 0; i < 5; i++) {
+    users.push(createMockUsers());
+  }
+  return users;
 }
 
 export function createStadistics() {
