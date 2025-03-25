@@ -9,9 +9,15 @@
         </div>
         <div class="users-filters">
           <div class="filter-buttons">
-            <button (click)="filterUsers('All')">View All</button>
-            <button (click)="filterUsers('Active')">Active</button>
-            <button (click)="filterUsers('Inactive')">Not Active</button>
+            <button
+              (click)="filterUsers('All')"
+              [ngClass]="{'selected': filteredStatus === 'All'}">View All</button>
+            <button
+              (click)="filterUsers('Active')"
+              [ngClass]="{'selected': filteredStatus === 'Active'}">Active</button>
+            <button
+              (click)="filterUsers('Inactive')"
+              [ngClass]="{'selected': filteredStatus === 'Inactive'}">Not Active</button>
           </div>
           <div class="search-filter">
             <app-search-input (searchTextChange)="handleSearchChange($event)"></app-search-input>

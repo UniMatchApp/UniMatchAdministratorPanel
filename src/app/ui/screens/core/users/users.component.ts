@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardMetricsComponent } from "../../../components/core/dashboard/dashboard-metrics/dashboard-metrics.component";
 import { DashboardUsersStatsComponent } from "../../../components/core/dashboard/dashboard-users-stats/dashboard-users-stats.component";
-import { NgForOf } from "@angular/common";
+import {NgClass, NgForOf} from "@angular/common";
 import { MockUserService } from '../../../../data/infrastructure/services/user/MockUserService';
 import { Profile } from '../../../../data/domain/models/Profile';
 import { ProfileInfo } from '../../../../data/application/services/ProfileService';
@@ -17,7 +17,8 @@ import { MockProfileService } from '../../../../data/infrastructure/services/pro
     DashboardUsersStatsComponent,
     NgForOf,
     SearchInputComponent,
-    UsersTableComponent
+    UsersTableComponent,
+    NgClass
   ],
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
@@ -27,7 +28,7 @@ export class UsersComponent implements OnInit {
   protected users: User[] = [];
   protected usersRows: UsersRow[] = [];
   protected filteredUsers: UsersRow[] = [];
-  protected filteredStatus: string = 'All';
+  filteredStatus: string = 'All';
 
   constructor(
     private userService: MockUserService,
@@ -49,8 +50,8 @@ export class UsersComponent implements OnInit {
 
     const hardcodedUserRow: UsersRow = {
       User: new ProfileInfo('hardcodedId', 'Hardcoded User', 'hardcoded@email.com', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn5ADlPRzadXlwAPooxqAaaja2nimcQyxcjA&s'),
-      Reported: 0,
-      Status: Status.Active,
+      Reported: 3,
+      Status: Status.Inactive,
       RegistrationDate: new Date('2023-01-01')
     };
 

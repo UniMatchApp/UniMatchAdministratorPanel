@@ -51,6 +51,12 @@ h2 {
   width: 100%;
 }
 
+.filter-buttons button.selected {
+  background-color: var(--mainColorBackground);
+  color: white;
+
+}
+
 .filters-container {
   display: flex;
   flex-direction: column;
