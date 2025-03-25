@@ -6,13 +6,15 @@ import { Location} from '../../domain/models/Location';
 import { Horoscope } from "../../domain/enums/Horoscope";
 import { Habits } from "../../domain/enums/Habits";
 import { Profile } from "../../domain/models/Profile";
+import { faker } from '@faker-js/faker';
+import { v4 as uuidv4 } from 'uuid';
 
 export function createMockProfile(): Profile {
   return new Profile(
-    'user123',
-    'John Doe',
-    30,
-    'About me text',
+    uuidv4(),
+    faker.name.fullName(),
+    faker.number.int({ min: 18, max: 60 }),
+    faker.lorem.sentence(),
     Gender.MALE,
     SexualOrientation.HETEROSEXUAL,
     RelationshipType.LONG_TERM,
@@ -20,7 +22,7 @@ export function createMockProfile(): Profile {
     ['reading', 'traveling'],
     ['image1.jpg', 'image2.jpg'],
     new Location(40.7128, -74.0060),
-    'image1.jpg',
+    'https://www.penstagram.com/uploads/default/original/3X/4/d/4dcc31393f96cdb3ca155c33cb32e0e429344724.jpeg',
     100,
     [25, 35],
     Horoscope.ARIES,
@@ -39,3 +41,11 @@ export function createMockProfile(): Profile {
     true
   );
 }
+export function createMultipleUsers(count: number): Profile[] {
+  const users: Profile[] = [];
+  for (let i = 0; i < count; i++) {
+    users.push(createMockProfile());
+  }
+  return users;
+}
+
