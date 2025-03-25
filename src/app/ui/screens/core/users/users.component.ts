@@ -10,11 +10,12 @@ import {MockUserService} from '../../../../data/infrastructure/services/user/Moc
 
 @Component({
   selector: 'app-users',
-    imports: [
-        DashboardMetricsComponent,
-        DashboardUsersStatsComponent,
-        NgForOf
-    ],
+  imports: [
+      DashboardMetricsComponent,
+      DashboardUsersStatsComponent,
+      NgForOf
+  ],
+  standalone: true,
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
