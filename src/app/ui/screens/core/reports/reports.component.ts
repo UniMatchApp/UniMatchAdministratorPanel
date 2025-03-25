@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { ReportsFiltersComponent } from '../../../components/core/reports/reports-filters/reports-filters.component';
 import { ReportsListComponent } from '../../../components/shared/reports-list/reports-list.component';
 import { MockUserService } from '../../../../data/infrastructure/services/user/MockUserService';
@@ -16,7 +16,7 @@ import { MockProfileService } from '../../../../data/infrastructure/services/pro
   standalone: true,
   styleUrl: './reports.component.css'
 })
-export class ReportsComponent {
+export class ReportsComponent implements OnInit{
 
   reports: ReportedUser[] = [];
   reportRows: ReportRow[] = [];
