@@ -48,16 +48,6 @@ export class UsersComponent implements OnInit {
       };
     }));
 
-    const hardcodedUserRow: UsersRow = {
-      User: new ProfileInfo('hardcodedId', 'Hardcoded User', 'hardcoded@email.com', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn5ADlPRzadXlwAPooxqAaaja2nimcQyxcjA&s'),
-      Reported: 3,
-      Status: Status.Inactive,
-      RegistrationDate: new Date('2023-01-01')
-    };
-
-    this.usersRows.push(hardcodedUserRow);
-
-
     this.filteredUsers = this.usersRows;
   }
 
@@ -82,6 +72,10 @@ export class UsersComponent implements OnInit {
   handleSearchChange(searchText: string): void {
     this.searchUserByName(searchText);
   }
+
+  getUserNumber() {
+    return this.usersRows.length;
+  }
 }
 
 export interface UsersRow {
@@ -90,6 +84,7 @@ export interface UsersRow {
   Status: Status;
   RegistrationDate: Date;
 }
+
 
 export enum Status {
   Active = 'Active',
