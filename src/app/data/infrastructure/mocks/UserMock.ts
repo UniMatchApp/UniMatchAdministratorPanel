@@ -1,6 +1,6 @@
 import {User} from '../../domain/models/User';
 import {ReportedUser} from '../../domain/models/ReportedUser';
-import {Metrics, Statistics, Stats} from '../../application/services/UserService';
+import {Metrics, ReportType, Statistics, Stats} from '../../application/services/UserService';
 import {Status} from '../../../ui/screens/core/users/users.component';
 
 export function createMockUsers() {
@@ -11,13 +11,15 @@ export function createMockUsers() {
         ['1', '2'],
         [
             new ReportedUser(
+                '0',
                 '1',
-                'Spam',
+                ReportType.Abusive,
                 'This user is posting spam'
             ),
             new ReportedUser(
+                '1',
                 '2',
-                'Offensive',
+                ReportType.Spam,
                 'This user is posting offensive content'
             )
         ],

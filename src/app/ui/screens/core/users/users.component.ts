@@ -124,7 +124,7 @@ export class UsersComponent implements OnInit {
   }
 
   get totalPages(): number {
-    return Math.ceil(this.totalUsers / this.pageSize);
+    return Math.max(1, Math.ceil(this.totalUsers / this.pageSize));
   }
 
   resetSelectAll(): void {

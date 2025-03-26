@@ -5,13 +5,17 @@ import { MockUserService } from '../../../../data/infrastructure/services/user/M
 import { ReportedUser } from '../../../../data/domain/models/ReportedUser';
 import {ProfileInfo, ProfileService} from '../../../../data/application/services/ProfileService';
 import { MockProfileService } from '../../../../data/infrastructure/services/profile/MockProfileService';
-import {UserService} from '../../../../data/application/services/UserService';
+import {ReportType, UserService} from '../../../../data/application/services/UserService';
+import {FaIconComponent} from '@fortawesome/angular-fontawesome';
+import {faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons';
+import {Status} from '../users/users.component';
 
 @Component({
   selector: 'app-reports',
   imports: [
     ReportsFiltersComponent,
-    ReportsListComponent
+    ReportsListComponent,
+    FaIconComponent
   ],
   templateUrl: './reports.component.html',
   standalone: true,
@@ -19,8 +23,15 @@ import {UserService} from '../../../../data/application/services/UserService';
 })
 export class ReportsComponent implements OnInit{
 
-  reports: ReportedUser[] = [];
   reportRows: ReportRow[] = [];
+
+  currentPage: number = 1;
+  pageSize: number = 8;
+  totalReports: number = 0;
+  selectedReportType: string = 'All';
+
+  protected readonly faArrowRight = faArrowRight;
+  protected readonly faArrowLeft = faArrowLeft;
 
   constructor(
     private userService: UserService,
@@ -29,9 +40,24 @@ export class ReportsComponent implements OnInit{
 
   async ngOnInit() {
     try {
-      const reports = await this.userService.getReports();
-      this.reports = reports;
-      console.log('Reports:', reports);
+      await this.userService.loadReports();
+      await this.loadReports(this.currentPage);
+      this.totalReports = await this.userService.getTotalReportsNumber();
+    } catch (error) {
+      console.error('Error al obtener los reportes:', error);
+    }
+  }
+
+  private parseReportTypeEnum(reportType: string) {
+    return ReportType[reportType as keyof typeof ReportType] || ReportType.All;
+  }
+
+  async loadReports(page: number, reportType: string = 'All'): Promise<void> {
+    const offset = (page - 1) * this.pageSize;
+    try {
+      const reportTypeEnum = this.parseReportTypeEnum(reportType)
+      const reports = await this.userService.getReportsBy(reportTypeEnum, this.pageSize, offset);
+
       this.reportRows = await Promise.all(
         reports.map(async (report) => {
           const reportedUserProfile = await this.profileService.getProfileInfo(report.reportedUserId);
@@ -44,12 +70,38 @@ export class ReportsComponent implements OnInit{
           };
         })
       );
-
-      console.log('ReportRows:', this.reportRows);
+      this.totalReports = await this.userService.getTotalReportsNumber();
     } catch (error) {
       console.error('Error al obtener los reportes:', error);
     }
+
   }
+
+
+
+  async nextPage()  {
+    if ((this.currentPage * this.pageSize) < this.totalReports) {
+      this.currentPage++;
+    }
+  }
+
+  async previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  get totalPages(): number {
+    return Math.max(1, Math.ceil(this.totalReports / this.pageSize));
+  }
+
+  onFilterTypeChanged(selectedType: string) {
+    this.selectedReportType = selectedType;
+    const parsedType = this.parseReportTypeEnum(selectedType);
+    this.loadReports(this.currentPage, parsedType);
+  }
+
+
 }
 
 export interface ReportRow {

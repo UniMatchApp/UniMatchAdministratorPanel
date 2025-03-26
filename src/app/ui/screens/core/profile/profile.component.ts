@@ -1,14 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ReportsListComponent} from '../../../components/shared/reports-list/reports-list.component';
 import {ProfileDetailsComponent} from '../../../components/core/profile/profile-details/profile-details.component'
-import {MockProfileService} from '../../../../data/infrastructure/services/profile/MockProfileService';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Profile} from '../../../../data/domain/models/Profile';
 import {ReportRow} from '../reports/reports.component';
-import {MockUserService} from '../../../../data/infrastructure/services/user/MockUserService';
 import {ReportedUser} from '../../../../data/domain/models/ReportedUser';
-import {ProfileInfo, ProfileService} from '../../../../data/application/services/ProfileService';
-import {UserService} from '../../../../data/application/services/UserService';
+import {ProfileService} from '../../../../data/application/services/ProfileService';
+import {ReportType, UserService} from '../../../../data/application/services/UserService';
 
 @Component({
   selector: 'app-profile',
@@ -48,8 +46,8 @@ export class ProfileComponent implements OnInit {
     });
 
     try {
-      const reports = await this.userService.getReports();
-      this.reports = reports;
+      await this.userService.loadReports();
+      const reports = await this.userService.getReportsBy(ReportType.All, 0, 10);
       console.log('Reports:', reports);
       this.reportRows = await Promise.all(
         reports.map(async (report) => {

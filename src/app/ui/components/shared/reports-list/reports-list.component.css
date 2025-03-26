@@ -19,21 +19,26 @@
   border-bottom: 1px solid var(--mainTextWhite);
 }
 
-.report-table-users img {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-}
-
 .user-reporting, .user-reported {
   cursor: pointer;
 }
 
 .user-info {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
   gap: 10px;
+}
+.user-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
 
 .user-info-avatar-name {
