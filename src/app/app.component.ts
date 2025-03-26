@@ -6,10 +6,12 @@ import {
 } from './ui/components/shared/administrator-side-bar/administrator-side-bar.component';
 import {MockUserService} from './data/infrastructure/services/user/MockUserService';
 import {MockProfileService} from './data/infrastructure/services/profile/MockProfileService';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, AdministratorSideBarComponent],
+  imports: [RouterOutlet, HeaderComponent, AdministratorSideBarComponent, FontAwesomeModule],
   templateUrl: './app.component.html',
   standalone: true,
   providers: [

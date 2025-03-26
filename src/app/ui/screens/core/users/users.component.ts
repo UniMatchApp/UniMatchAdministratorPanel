@@ -59,6 +59,7 @@ export class UsersComponent implements OnInit {
       this.filteredUsers = this.usersRows.filter(user => user.Status === status);
     }
   }
+
   searchUserByName(name: string): void {
     if (name) {
       this.filteredUsers = this.usersRows.filter(user =>

@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
+import {Statistics} from '../../../../../data/application/services/UserService';
 
 @Component({
   selector: 'app-dashboard-users-stats',
@@ -13,15 +14,9 @@ import {NgForOf, NgIf} from '@angular/common';
 })
 export class DashboardUsersStatsComponent {
 
-  @Input() title!: string;
-  @Input() image?: string;
-  @Input() columns!: string[];
-  @Input() table!: { stat: string; users: number; actives: number }[];
+  @Input() statistic: Statistics | undefined;
 
   constructor() {
-  }
-
-  ngOnInit() {
   }
 
 }

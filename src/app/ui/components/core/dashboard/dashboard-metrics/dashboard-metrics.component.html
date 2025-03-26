@@ -11,7 +11,10 @@
          [ngStyle]="{'background-color': colors[i] + '80'}">
       <p class="dashboard-metric-title">{{ metric.title }}</p>
       <p class="dashboard-metric-value">{{ metric.value }}</p>
-      <p class="dashboard-metric-percentage">{{ metric.percentage }}</p>
+      <p class="dashboard-metric-percentage">
+        {{ metric.percetage }}%
+        <fa-icon [icon]="getArrowIcon(metric.percetage)"></fa-icon>
+      </p>
     </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { UserService } from '../../../application/services/UserService';
+import {Metrics, Statistics, UserService} from '../../../application/services/UserService';
 import {User} from '../../../domain/models/User';
 import {createMetrics, createMocksUsers, createMockUsers, createStadistics} from '../../mocks/UserMock';
 import {ReportedUser} from '../../../domain/models/ReportedUser';
@@ -30,11 +30,19 @@ export class MockUserService implements UserService {
     return (await this.getCurrentUser()).reportedUsers;
   }
 
-  async getStadistics(): Promise<any> {
+  async getStadistics(): Promise<Statistics[]> {
     return createStadistics();
   }
 
-  async getMetrics(): Promise<any> {
+  async getMetrics(): Promise<Metrics[]> {
     return createMetrics();
+  }
+
+  async getUsersByName(name: string): Promise<User[]> {
+    return createMocksUsers();
+  }
+
+  async getUserByStatus(status: string): Promise<User[]> {
+    return createMocksUsers();
   }
 }

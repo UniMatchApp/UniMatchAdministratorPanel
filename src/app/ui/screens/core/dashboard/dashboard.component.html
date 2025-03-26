@@ -2,7 +2,7 @@
   <div class="dashboard-inside-container">
     <app-dashboard-metrics [metrics]="metrics"></app-dashboard-metrics>
     <div class="dashboard-lists">
-      <app-dashboard-users-stats *ngFor="let stat of stats" [title]="stat.title" [image]="stat.image" [table]="stat.table" [columns]="stat.columns"></app-dashboard-users-stats>
+      <app-dashboard-users-stats *ngFor="let stat of stats" [statistic]="stat"></app-dashboard-users-stats>
     </div>
   </div>
 </div>

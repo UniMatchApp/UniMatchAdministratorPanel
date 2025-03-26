@@ -1,5 +1,6 @@
 import {User} from '../../domain/models/User';
 import {ReportedUser} from '../../domain/models/ReportedUser';
+import {Metrics, Statistics, Stats} from '../../application/services/UserService';
 
 export function createMockUsers() {
     return new User(
@@ -32,44 +33,44 @@ export function createMocksUsers() {
   return users;
 }
 
-export function createStadistics() {
+export function createStadistics(): Statistics[] {
   return [
-    { title: 'Most Active Countries', image: 'assets/asia.png', columns: ['Country', 'Users', 'Active'], table: [
-        { stat: 'China', users: 2400, actives: 1235 },
-        { stat: 'China', users: 2400, actives: 1235 },
-        { stat: 'China', users: 2400, actives: 1235 },
-        { stat: 'China', users: 2400, actives: 1235 },
-        { stat: 'China', users: 2400, actives: 1235 },
-        { stat: 'China', users: 2400, actives: 1235 },
-        { stat: 'China', users: 2400, actives: 1235 },
-        { stat: 'China', users: 2400, actives: 1235 },
-        { stat: 'China', users: 2400, actives: 1235 },
-        { stat: 'China', users: 2400, actives: 1235 }
-      ]},
-    { title: 'Users by gender', image: '', columns: ['Gender', 'Users', 'Active'], table: [
-        { stat: 'Men', users: 2400, actives: 1235 },
-        { stat: 'Woman', users: 2400, actives: 1235 },
-        { stat: 'Non-binary', users: 2400, actives: 1235 },
-        { stat: 'Other', users: 2400, actives: 1235 }
-      ]},
-    { title: 'Users by relationship', image: '', columns: ['Relationship', 'Users', 'Active'], table: [
-        { stat: 'Friends', users: 2400, actives: 1235 },
-        { stat: 'Couple', users: 2400, actives: 1235 },
-        { stat: 'Others', users: 2400, actives: 1235 }
-      ]},
-    { title: 'Users by orientation', image: '', columns: ['Orientation', 'Users', 'Active'], table: [
-        { stat: 'Heterosexual', users: 2400, actives: 1235 },
-        { stat: 'Homosexual', users: 2400, actives: 1235 },
-        { stat: 'Other', users: 2400, actives: 1235 },
-      ]}
+    new Statistics('Most Active Countries', 'assets/asia.png', ['Country', 'Users', 'Active'], [
+      new Stats('China', 2400, 1235),
+      new Stats('China', 2400, 1235),
+      new Stats('China', 2400, 1235),
+      new Stats('China', 2400, 1235),
+      new Stats('China', 2400, 1235),
+      new Stats('China', 2400, 1235),
+      new Stats('China', 2400, 1235),
+      new Stats('China', 2400, 1235),
+      new Stats('China', 2400, 1235),
+      new Stats('China', 2400, 1235)
+    ]),
+    new Statistics('Users by gender', '', ['Gender', 'Users', 'Active'], [
+      new Stats('Men', 2400, 1235),
+      new Stats('Woman', 2400, 1235),
+      new Stats('Non-binary', 2400, 1235),
+      new Stats('Other', 2400, 1235)
+    ]),
+    new Statistics('Users by relationship', '', ['Relationship', 'Users', 'Active'], [
+      new Stats('Friends', 2400, 1235),
+      new Stats('Couple', 2400, 1235),
+      new Stats('Others', 2400, 1235)
+    ]),
+    new Statistics('Users by orientation', '', ['Orientation', 'Users', 'Active'], [
+      new Stats('Heterosexual', 2400, 1235),
+      new Stats('Homosexual', 2400, 1235),
+      new Stats('Other', 2400, 1235)
+    ])
   ];
 }
 
-export function createMetrics() {
-    return [
-      { title: 'Users', value: 0, percentage: "+ 5.2%" },
-      { title: 'Matches', value: 0, percentage: "- 3.2%" },
-      { title: 'Uploads', value: 0, percentage: "+ 2.2%" },
-      { title: 'Active users', value: 0, percentage: "+ 1.2%" }
-    ];
+export function createMetrics(): Metrics[] {
+  return [
+    new Metrics('Users', 100, 5.2),
+    new Metrics('Users', 0, 5.2),
+    new Metrics('Matches', 0, -3.2),
+    new Metrics('Uploads', 0, 2.2),
+  ];
 }

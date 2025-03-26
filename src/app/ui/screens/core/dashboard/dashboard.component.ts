@@ -7,6 +7,7 @@ import {
 } from '../../../components/core/dashboard/dashboard-users-stats/dashboard-users-stats.component';
 import {NgForOf} from '@angular/common';
 import {MockUserService} from '../../../../data/infrastructure/services/user/MockUserService';
+import {Metrics, Statistics} from '../../../../data/application/services/UserService';
 @Component({
   selector: 'app-dashboard',
   imports: [
@@ -24,8 +25,8 @@ import {MockUserService} from '../../../../data/infrastructure/services/user/Moc
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements OnInit{
-  protected stats: any[] = [];
-  protected metrics: any[] = [];
+  protected stats: Statistics[] = [];
+  protected metrics: Metrics[] = [];
 
   constructor(private userService: MockUserService) {}
 

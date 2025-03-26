@@ -2,18 +2,18 @@
 <div class="user-stats-container">
   <div class="user-stats-inside-container">
     <div class="user-stats-header">
-      <h2>{{ title }}</h2>
+      <h2>{{ statistic?.title }}</h2>
     </div>
-    <img *ngIf="image" [src]="image" alt="user-stats-image" />
+    <img *ngIf="statistic?.image" [src]="statistic?.image" alt="user-stats-image" />
     <div class="user-stats-table">
       <table>
         <thead>
         <tr>
-          <th *ngFor="let column of columns">{{ column }}</th>
+          <th *ngFor="let column of statistic?.columns">{{ column }}</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let row of table">
+        <tr *ngFor="let row of statistic?.table">
           <td>{{ row.stat }}</td>
           <td>{{ row.users }}</td>
           <td>{{ row.actives }}</td>
