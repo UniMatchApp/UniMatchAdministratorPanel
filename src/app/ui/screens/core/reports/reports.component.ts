@@ -74,10 +74,13 @@ export class ReportsComponent implements OnInit{
     } catch (error) {
       console.error('Error al obtener los reportes:', error);
     }
-
   }
 
-
+  onFilterTypeChanged(selectedType: string) {
+    this.selectedReportType = selectedType;
+    const parsedType = this.parseReportTypeEnum(selectedType);
+    this.loadReports(this.currentPage, parsedType);
+  }
 
   async nextPage()  {
     if ((this.currentPage * this.pageSize) < this.totalReports) {
@@ -95,11 +98,7 @@ export class ReportsComponent implements OnInit{
     return Math.max(1, Math.ceil(this.totalReports / this.pageSize));
   }
 
-  onFilterTypeChanged(selectedType: string) {
-    this.selectedReportType = selectedType;
-    const parsedType = this.parseReportTypeEnum(selectedType);
-    this.loadReports(this.currentPage, parsedType);
-  }
+
 
 
 }
