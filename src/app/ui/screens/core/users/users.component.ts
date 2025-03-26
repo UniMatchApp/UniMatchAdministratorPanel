@@ -3,11 +3,9 @@ import {
   DashboardMetricsComponent
 } from "../../../components/core/dashboard/dashboard-metrics/dashboard-metrics.component";
 import {NgClass} from "@angular/common";
-import {MockUserService} from '../../../../data/infrastructure/services/user/MockUserService';
 import {ProfileInfo, ProfileService} from '../../../../data/application/services/ProfileService';
 import {SearchInputComponent} from '../../../components/shared/search-input/search-input.component';
 import {UsersTableComponent} from '../../../components/core/users/users-table/users-table.component';
-import {MockProfileService} from '../../../../data/infrastructure/services/profile/MockProfileService';
 import {Metrics, UserService} from '../../../../data/application/services/UserService';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 import {faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons';
@@ -32,6 +30,9 @@ export class UsersComponent implements OnInit {
   currentPage: number = 1;
   pageSize: number = 5;
   totalUsers: number = 0;
+
+  protected readonly faArrowLeft = faArrowLeft;
+  protected readonly faArrowRight = faArrowRight;
 
   constructor(
     private userService: UserService,
@@ -67,13 +68,13 @@ export class UsersComponent implements OnInit {
           };
         })
       );
+      this.totalUsers = await this.userService.getTotalUsersNumber();
+
+      console.log(this.totalUsers)
     } catch (error) {
       console.error('Error loading users:', error);
     }
   }
-
-
-
 
   async searchUserByName(name: string): Promise<void> {
     if (name) {
@@ -87,13 +88,14 @@ export class UsersComponent implements OnInit {
           RegistrationDate: user.registrationDate
         };
       }));
+    } else {
+      this.loadUsers(this.currentPage);
     }
   }
 
   async filterUsers(status: string): Promise<void> {
     this.filteredStatus = status;
-
-    this.loadUsers(this.currentPage, status);
+    await this.loadUsers(this.currentPage, status);
   }
 
 
@@ -101,21 +103,17 @@ export class UsersComponent implements OnInit {
     this.searchUserByName(searchText);
   }
 
-  async getUserNumber() {
-    return await this.userService.getTotalUsersNumber();
-  }
-
-  nextPage(): void {
+  async nextPage()  {
     if ((this.currentPage * this.pageSize) < this.totalUsers) {
       this.currentPage++;
-      this.loadUsers(this.currentPage);
+      await this.loadUsers(this.currentPage, this.filteredStatus);
     }
   }
 
-  previousPage(): void {
+  async previousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
-      this.loadUsers(this.currentPage);
+      await this.loadUsers(this.currentPage, this.filteredStatus);
     }
   }
 
@@ -123,8 +121,7 @@ export class UsersComponent implements OnInit {
     return Math.ceil(this.totalUsers / this.pageSize);
   }
 
-  protected readonly faArrowLeft = faArrowLeft;
-  protected readonly faArrowRight = faArrowRight;
+
 }
 
 export interface UsersRow {
