@@ -1,8 +1,12 @@
 import {Profile} from '../../domain/models/Profile';
+import {Injectable} from '@angular/core';
 
-export interface ProfileService {
-  getProfileInfo(userId: string): Promise<ProfileInfo>;
-  getProfile(userId: string): Promise<Profile>;
+@Injectable({
+  providedIn: 'root'
+})
+export abstract class ProfileService {
+  abstract getProfileInfo(userId: string): Promise<ProfileInfo>;
+  abstract getProfile(userId: string): Promise<Profile>;
 }
 
 export class ProfileInfo {

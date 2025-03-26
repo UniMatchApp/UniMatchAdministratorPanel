@@ -1,4 +1,5 @@
 import {ReportedUser} from './ReportedUser';
+import {Status} from '../../../ui/screens/core/users/users.component';
 
 export class User {
   constructor(
@@ -8,5 +9,6 @@ export class User {
     public blockedUsers: string[] = [],
     public reportedUsers: ReportedUser[] = [],
     public registered: boolean = false,
+    public status: Status = Status.All,
   ) {}
 }

@@ -3,8 +3,9 @@ import { ReportsFiltersComponent } from '../../../components/core/reports/report
 import { ReportsListComponent } from '../../../components/shared/reports-list/reports-list.component';
 import { MockUserService } from '../../../../data/infrastructure/services/user/MockUserService';
 import { ReportedUser } from '../../../../data/domain/models/ReportedUser';
-import { ProfileInfo } from '../../../../data/application/services/ProfileService';
+import {ProfileInfo, ProfileService} from '../../../../data/application/services/ProfileService';
 import { MockProfileService } from '../../../../data/infrastructure/services/profile/MockProfileService';
+import {UserService} from '../../../../data/application/services/UserService';
 
 @Component({
   selector: 'app-reports',
@@ -22,8 +23,8 @@ export class ReportsComponent implements OnInit{
   reportRows: ReportRow[] = [];
 
   constructor(
-    private userService: MockUserService,
-    private profileService: MockProfileService
+    private userService: UserService,
+    private profileService: ProfileService,
   ) {}
 
   async ngOnInit() {

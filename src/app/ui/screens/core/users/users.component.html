@@ -3,28 +3,50 @@
     <app-dashboard-metrics [metrics]="metrics"></app-dashboard-metrics>
 
     <div class="users-lists">
-      <div class="filters-container">
-        <div>
-          <h2>All users ( {{ getUserNumber() }} )</h2>
-        </div>
-        <div class="users-filters">
-          <div class="filter-buttons">
-            <button
-              (click)="filterUsers('All')"
-              [ngClass]="{'selected': filteredStatus === 'All'}">View All</button>
-            <button
-              (click)="filterUsers('Active')"
-              [ngClass]="{'selected': filteredStatus === 'Active'}">Active</button>
-            <button
-              (click)="filterUsers('Inactive')"
-              [ngClass]="{'selected': filteredStatus === 'Inactive'}">Not Active</button>
+      <div class="users-table">
+        <div class="filters-container">
+          <div>
+            <h2>All users ( {{ totalUsers }} )</h2>
           </div>
-          <div class="search-filter">
-            <app-search-input (searchTextChange)="handleSearchChange($event)"></app-search-input>
+          <div class="users-filters">
+            <div class="filter-buttons">
+              <button
+                (click)="filterUsers('All')"
+                [ngClass]="{'selected': filteredStatus === 'All'}">View All</button>
+              <button
+                (click)="filterUsers('Active')"
+                [ngClass]="{'selected': filteredStatus === 'Active'}">Active</button>
+              <button
+                (click)="filterUsers('Inactive')"
+                [ngClass]="{'selected': filteredStatus === 'Inactive'}">Not Active</button>
+            </div>
+            <div class="search-filter">
+              <app-search-input (searchTextChange)="handleSearchChange($event)"></app-search-input>
+            </div>
           </div>
         </div>
+        <app-users-table [users]="usersRows"></app-users-table>
       </div>
-      <app-users-table [users]="filteredUsers"></app-users-table>
+      <div class="pagination">
+        <button
+          class="pagination-button"
+          (click)="previousPage()"
+          [disabled]="currentPage === 1">
+          <i>
+            <fa-icon [icon]="faArrowLeft"></fa-icon>
+          </i>
+        </button>
+        <span>{{ currentPage }} / {{ totalPages }}</span>
+        <button
+          class="pagination-button"
+          (click)="nextPage()"
+          [disabled]="currentPage === totalPages">
+          <i>
+            <fa-icon [icon]="faArrowRight"></fa-icon>
+          </i>
+        </button>
+      </div>
     </div>
+
   </div>
 </div>

@@ -1,6 +1,7 @@
 import {User} from '../../domain/models/User';
 import {ReportedUser} from '../../domain/models/ReportedUser';
 import {Status} from '../../../ui/screens/core/users/users.component';
+import {Injectable} from '@angular/core';
 
 export class Stats {
   stat: string;
@@ -40,15 +41,19 @@ export class Metrics {
   }
 }
 
-export interface UserService {
-  login(email: string, password: string): Promise<void>;
-  logout(): Promise<void>;
-  getCurrentUser(): Promise<User>;
-  getAllUsers(): Promise<User[]>;
-  getReports(): Promise<ReportedUser[]>;
-  getUserReports(): Promise<ReportedUser[]>;
-  getMetrics(): Promise<Metrics[]>;
-  getStadistics(): Promise<Statistics[]>;
-  getUsersByName(name: string): Promise<User[]>;
-  getUserByStatus(status: Status): Promise<User[]>;
+@Injectable({
+  providedIn: 'root'
+})
+export abstract class UserService {
+  abstract login(email: string, password: string): Promise<void>;
+  abstract logout(): Promise<void>;
+  abstract getCurrentUser(): Promise<User>;
+  abstract loadAllUsers(): Promise<void>;
+  abstract getReports(): Promise<ReportedUser[]>;
+  abstract getUserReports(): Promise<ReportedUser[]>;
+  abstract getMetrics(): Promise<Metrics[]>;
+  abstract getStadistics(): Promise<Statistics[]>;
+  abstract getUsersByName(name: string, limit: number, offset: number): Promise<User[]>;
+  abstract getUserByStatus(status: Status, limit: number, offset: number): Promise<User[]>;
+  abstract getTotalUsersNumber(): Promise<number>;
 }

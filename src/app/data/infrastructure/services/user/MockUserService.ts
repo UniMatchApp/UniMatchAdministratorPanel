@@ -4,7 +4,9 @@ import {createMetrics, createMocksUsers, createMockUsers, createStadistics} from
 import {ReportedUser} from '../../../domain/models/ReportedUser';
 import {createMockReports} from '../../mocks/ReportsMock';
 
-export class MockUserService implements UserService {
+export class MockUserService extends UserService {
+
+  private users: User[] = [];
 
   async login(email: string, password: string): Promise<void> {
     console.log(`Mock login with email: ${email}`);
@@ -18,8 +20,8 @@ export class MockUserService implements UserService {
     return createMockUsers();
   }
 
-  async getAllUsers(): Promise<User[]> {
-    return createMocksUsers();
+  async loadAllUsers(): Promise<void> {
+    this.users = createMocksUsers();
   }
 
   async getReports(): Promise<ReportedUser[]> {
@@ -38,11 +40,15 @@ export class MockUserService implements UserService {
     return createMetrics();
   }
 
-  async getUsersByName(name: string): Promise<User[]> {
-    return createMocksUsers();
+  async getUsersByName(name: string, limit: number = 10, offset: number = 0): Promise<User[]> {
+    return this.users.filter(user => user.email.includes(name)).slice(offset, offset + limit);
   }
 
-  async getUserByStatus(status: string): Promise<User[]> {
-    return createMocksUsers();
+  async getUserByStatus(status: string, limit: number = 10, offset: number = 0): Promise<User[]> {
+    return this.users.filter(user => user.status === status || status === 'All').slice(offset, offset + limit);
+  }
+
+  async getTotalUsersNumber(): Promise<number> {
+    return this.users.length;
   }
 }

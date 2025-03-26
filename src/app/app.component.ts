@@ -7,6 +7,8 @@ import {
 import {MockUserService} from './data/infrastructure/services/user/MockUserService';
 import {MockProfileService} from './data/infrastructure/services/profile/MockProfileService';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {UserService} from './data/application/services/UserService';
+import {ProfileService} from './data/application/services/ProfileService';
 
 
 @Component({
@@ -15,8 +17,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   templateUrl: './app.component.html',
   standalone: true,
   providers: [
-    MockUserService,
-    MockProfileService
+    { provide: UserService, useClass: MockUserService },
+    { provide: ProfileService, useClass: MockProfileService },
   ],
   styleUrl: './app.component.css'
 })

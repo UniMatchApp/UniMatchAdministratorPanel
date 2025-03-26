@@ -1,82 +1,130 @@
-import { Component, OnInit } from '@angular/core';
-import { DashboardMetricsComponent } from "../../../components/core/dashboard/dashboard-metrics/dashboard-metrics.component";
-import { DashboardUsersStatsComponent } from "../../../components/core/dashboard/dashboard-users-stats/dashboard-users-stats.component";
-import {NgClass, NgForOf} from "@angular/common";
-import { MockUserService } from '../../../../data/infrastructure/services/user/MockUserService';
-import { Profile } from '../../../../data/domain/models/Profile';
-import { ProfileInfo } from '../../../../data/application/services/ProfileService';
-import { SearchInputComponent } from '../../../components/shared/search-input/search-input.component';
-import { UsersTableComponent } from '../../../components/core/users/users-table/users-table.component';
-import { User } from '../../../../data/domain/models/User';
-import { MockProfileService } from '../../../../data/infrastructure/services/profile/MockProfileService';
+import {Component, OnInit} from '@angular/core';
+import {
+  DashboardMetricsComponent
+} from "../../../components/core/dashboard/dashboard-metrics/dashboard-metrics.component";
+import {NgClass} from "@angular/common";
+import {MockUserService} from '../../../../data/infrastructure/services/user/MockUserService';
+import {ProfileInfo, ProfileService} from '../../../../data/application/services/ProfileService';
+import {SearchInputComponent} from '../../../components/shared/search-input/search-input.component';
+import {UsersTableComponent} from '../../../components/core/users/users-table/users-table.component';
+import {MockProfileService} from '../../../../data/infrastructure/services/profile/MockProfileService';
+import {Metrics, UserService} from '../../../../data/application/services/UserService';
+import {FaIconComponent} from '@fortawesome/angular-fontawesome';
+import {faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-users',
   imports: [
     DashboardMetricsComponent,
-    DashboardUsersStatsComponent,
-    NgForOf,
     SearchInputComponent,
     UsersTableComponent,
-    NgClass
+    NgClass,
+    FaIconComponent
   ],
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  protected metrics: any[] = [];
-  protected users: User[] = [];
+  protected metrics: Metrics[] = [];
   protected usersRows: UsersRow[] = [];
-  protected filteredUsers: UsersRow[] = [];
   filteredStatus: string = 'All';
 
+  currentPage: number = 1;
+  pageSize: number = 5;
+  totalUsers: number = 0;
+
   constructor(
-    private userService: MockUserService,
-    private profileService: MockProfileService,
+    private userService: UserService,
+    private profileService: ProfileService,
   ) {}
 
   async ngOnInit() {
-    this.metrics = await this.userService.getMetrics();
-    this.users = await this.userService.getAllUsers();
-
-    this.usersRows = await Promise.all(this.users.map(async user => {
-      return {
-        User: await this.profileService.getProfileInfo(user.id),
-        Reported: user.reportedUsers.length,
-        Status: Status.Active,
-        RegistrationDate: user.registrationDate
-      };
-    }));
-
-    this.filteredUsers = this.usersRows;
-  }
-
-  filterUsers(status: string): void {
-    this.filteredStatus = status;
-    if (status === 'All') {
-      this.filteredUsers = this.usersRows;
-    } else {
-      this.filteredUsers = this.usersRows.filter(user => user.Status === status);
+    try {
+      await Promise.all([
+            this.userService.loadAllUsers(),
+            this.totalUsers = await this.userService.getTotalUsersNumber(),
+            this.metrics = await this.userService.getMetrics()
+      ]);
+      await this.loadUsers(this.currentPage);
+    } catch (error) {
+      console.error('Error loading data:', error);
     }
   }
 
-  searchUserByName(name: string): void {
-    if (name) {
-      this.filteredUsers = this.usersRows.filter(user =>
-        user.User.name.toLowerCase().includes(name.toLowerCase())
+  async loadUsers(page: number, status: string = 'All'): Promise<void> {
+    const offset = (page - 1) * this.pageSize;
+    const parsedStatus = Status[status as keyof typeof Status] || Status.All;
+    try {
+      const users = await this.userService.getUserByStatus(parsedStatus, this.pageSize, offset);
+      this.usersRows = await Promise.all(
+        users.map(async user => {
+          const profile = await this.profileService.getProfileInfo(user.id);
+          return {
+            User: profile,
+            Reported: user.reportedUsers.length,
+            Status: user.status,
+            RegistrationDate: user.registrationDate
+          };
+        })
       );
-    } else {
-      this.filteredUsers = this.usersRows;
+    } catch (error) {
+      console.error('Error loading users:', error);
     }
   }
+
+
+
+
+  async searchUserByName(name: string): Promise<void> {
+    if (name) {
+      const users = await this.userService.getUsersByName(name, this.pageSize, this.currentPage * this.pageSize);
+
+      this.usersRows = await Promise.all(users.map(async user => {
+        return {
+          User: await this.profileService.getProfileInfo(user.id),
+          Reported: user.reportedUsers.length,
+          Status: user.status,
+          RegistrationDate: user.registrationDate
+        };
+      }));
+    }
+  }
+
+  async filterUsers(status: string): Promise<void> {
+    this.filteredStatus = status;
+
+    this.loadUsers(this.currentPage, status);
+  }
+
 
   handleSearchChange(searchText: string): void {
     this.searchUserByName(searchText);
   }
 
-  getUserNumber() {
-    return this.usersRows.length;
+  async getUserNumber() {
+    return await this.userService.getTotalUsersNumber();
   }
+
+  nextPage(): void {
+    if ((this.currentPage * this.pageSize) < this.totalUsers) {
+      this.currentPage++;
+      this.loadUsers(this.currentPage);
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.loadUsers(this.currentPage);
+    }
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.totalUsers / this.pageSize);
+  }
+
+  protected readonly faArrowLeft = faArrowLeft;
+  protected readonly faArrowRight = faArrowRight;
 }
 
 export interface UsersRow {
@@ -86,8 +134,8 @@ export interface UsersRow {
   RegistrationDate: Date;
 }
 
-
 export enum Status {
+  All = 'All',
   Active = 'Active',
   Inactive = 'Inactive'
 }

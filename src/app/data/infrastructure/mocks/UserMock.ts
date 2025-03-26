@@ -1,6 +1,7 @@
 import {User} from '../../domain/models/User';
 import {ReportedUser} from '../../domain/models/ReportedUser';
 import {Metrics, Statistics, Stats} from '../../application/services/UserService';
+import {Status} from '../../../ui/screens/core/users/users.component';
 
 export function createMockUsers() {
     return new User(
@@ -20,14 +21,15 @@ export function createMockUsers() {
                 'This user is posting offensive content'
             )
         ],
-      true
+        true,
+        Status.Active
     )
 }
 
 export function createMocksUsers() {
   let users: User[] = [];
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 19; i++) {
     users.push(createMockUsers());
   }
   return users;
