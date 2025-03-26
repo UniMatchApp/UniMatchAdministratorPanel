@@ -4,6 +4,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
   selector: 'app-checkbox-input',
   imports: [],
   templateUrl: './checkbox-input.component.html',
+  standalone: true,
   styleUrl: './checkbox-input.component.css'
 })
 export class CheckboxInputComponent {

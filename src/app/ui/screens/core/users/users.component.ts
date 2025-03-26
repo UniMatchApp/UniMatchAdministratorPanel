@@ -20,6 +20,7 @@ import {faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons';
     FaIconComponent
   ],
   templateUrl: './users.component.html',
+  standalone: true,
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {

@@ -7,12 +7,15 @@ import {ReportRow} from '../reports/reports.component';
 import {ReportedUser} from '../../../../data/domain/models/ReportedUser';
 import {ProfileService} from '../../../../data/application/services/ProfileService';
 import {ReportType, UserService} from '../../../../data/application/services/UserService';
+import {faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons';
+import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-profile',
   imports: [
     ReportsListComponent,
-    ProfileDetailsComponent
+    ProfileDetailsComponent,
+    FaIconComponent
   ],
   templateUrl: './profile.component.html',
   standalone: true,
@@ -22,6 +25,9 @@ export class ProfileComponent implements OnInit {
   profile: Profile | null = null;
   reportRows: ReportRow[] = [];
   reports: ReportedUser[] = [];
+  currentPage: number = 1;
+  pageSize: number = 8;
+  totalReports: number = 0;
 
   constructor(
     private profileService: ProfileService,
@@ -32,11 +38,14 @@ export class ProfileComponent implements OnInit {
 
   async ngOnInit() {
     this.route.queryParams.subscribe(async params => {
-      const userId = params['id'];
+      const userId =  this.route.snapshot.paramMap.get('id');
+
+      console.log('UserId:', userId);
 
       if (userId) {
         try {
           this.profile = await this.profileService.getProfile(userId);
+          console.log('Profile2323:', this.profile);
         } catch (error) {
           console.error('Error al obtener el perfil:', error);
         }
@@ -47,7 +56,8 @@ export class ProfileComponent implements OnInit {
 
     try {
       await this.userService.loadReports();
-      const reports = await this.userService.getReportsBy(ReportType.All, 0, 10);
+      await this.loadReports(this.currentPage);
+      const reports = await this.userService.getReportsBy(ReportType.All, 8, 0);
       console.log('Reports:', reports);
       this.reportRows = await Promise.all(
         reports.map(async (report) => {
@@ -67,4 +77,53 @@ export class ProfileComponent implements OnInit {
       console.error('Error al obtener los reportes:', error);
     }
   }
+
+  //ABSTRAER LO DE ABAJO SI SE PUEDE JUNTO AL DE REPORTS
+  private parseReportTypeEnum(reportType: string) {
+    return ReportType[reportType as keyof typeof ReportType] || ReportType.All;
+  }
+
+  async loadReports(page: number, reportType: string = 'All'): Promise<void> {
+    const offset = (page - 1) * this.pageSize;
+    try {
+      const reportTypeEnum = this.parseReportTypeEnum(reportType)
+      const reports = await this.userService.getReportsBy(reportTypeEnum, this.pageSize, offset);
+
+      this.reportRows = await Promise.all(
+        reports.map(async (report) => {
+          const reportedUserProfile = await this.profileService.getProfileInfo(report.reportedUserId);
+          const reportingUserProfile = await this.profileService.getProfileInfo(report.reportingUserId);
+
+          return {
+            reportedUser: reportedUserProfile,
+            reportingUser: reportingUserProfile,
+            report
+          };
+        })
+      );
+      this.totalReports = await this.userService.getTotalReportsNumber();
+    } catch (error) {
+      console.error('Error al obtener los reportes:', error);
+    }
+  }
+
+  async nextPage()  {
+    if ((this.currentPage * this.pageSize) < this.totalReports) {
+      this.currentPage++;
+    }
+  }
+
+  async previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  get totalPages(): number {
+    return Math.max(1, Math.ceil(this.totalReports / this.pageSize));
+  }
+
+  protected readonly faArrowRight = faArrowRight;
+  protected readonly faArrowLeft = faArrowLeft;
+
 }

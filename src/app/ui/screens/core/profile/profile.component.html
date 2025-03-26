@@ -1,6 +1,27 @@
 <div class="profile-container">
   <div class="profile-inside-container">
-    <app-profile-details></app-profile-details>
-    <app-reports-list [reports]="reportRows"></app-reports-list>
+    <app-profile-details [profile]="profile" ></app-profile-details>
+    <div class="profile-table">
+      <app-reports-list [reports]="reportRows"></app-reports-list>
+      <div class="pagination">
+        <button
+          class="pagination-button"
+          (click)="previousPage()"
+          [disabled]="currentPage === 1">
+          <i>
+            <fa-icon [icon]="faArrowLeft"></fa-icon>
+          </i>
+        </button>
+        <span>{{ currentPage }} / {{ totalPages }}</span>
+        <button
+          class="pagination-button"
+          (click)="nextPage()"
+          [disabled]="currentPage === totalReports">
+          <i>
+            <fa-icon [icon]="faArrowRight"></fa-icon>
+          </i>
+        </button>
+      </div>
+    </div>
   </div>
 </div>

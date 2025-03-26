@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 30px;
   padding: 20px;
+  width: clamp(300px, 30%, 500px);
   background: var(--mainColor);
   color: var(--mainTextWhite);
 }
@@ -15,7 +16,7 @@
 }
 
 .profile-details-container h1 {
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 .profile-details-container p {
@@ -31,7 +32,7 @@
 .profile-details{
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 }
 
 .profile-details-activity{

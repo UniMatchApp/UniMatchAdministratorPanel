@@ -8,6 +8,7 @@ import {NgForOf} from '@angular/common';
   selector: 'app-users-table',
   imports: [NgForOf, CheckboxInputComponent, RouterLink],
   templateUrl: './users-table.component.html',
+  standalone: true,
   styleUrls: ['./users-table.component.css']
 })
 export class UsersTableComponent {

@@ -4,26 +4,26 @@
       <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" alt="avatar">
     </div>
     <div class="profile-details-header-name">
-      <h1>John Doe</h1>
+      <h1>{{name}}</h1>
       <h1>#123456</h1>
     </div>
   </div>
   <div class="profile-details-about">
     <h1>About</h1>
-    <p><i class="fas fa-envelope"></i> Email: pepito&#64;gmail.com</p>
-    <p><i class="fas fa-comment"></i> Description: I like basketball</p>
+    <p><i class="fas fa-envelope"></i> Email: {{email}}</p>
+    <p><i class="fas fa-comment"></i> Description: {{profile?.aboutMe}}</p>
   </div>
 
   <div class="profile-details">
     <h1>Details</h1>
-    <p><i class="fas fa-venus-mars"></i> Gender: Male</p>
-    <p><i class="fas fa-birthday-cake"></i> Birthday: 01/01/1990</p>
-    <p><i class="fas fa-venus-mars"></i> Sexual Orientation: Straight</p>
+    <p><i class="fas fa-venus-mars"></i> Gender: {{profile?.gender}}</p>
+    <p><i class="fas fa-birthday-cake"></i> Birthday: {{formattedBirthday}}</p>
+    <p><i class="fas fa-venus-mars"></i> Sexual Orientation: {{profile?.genderPriority}}</p>
   </div>
 
   <div class="profile-details-activity">
     <h1>Activity</h1>
-    <p><i class="fas fa-map-marker-alt"></i> Location: Las Palmas, Spain</p>
-    <p><i class="fas fa-signal"></i> Status: Active</p>
+    <p><i class="fas fa-map-marker-alt"></i> Location: {{profile?.location}}</p>
+    <p><i class="fas fa-signal"></i> Status: </p>
   </div>
 </div>
