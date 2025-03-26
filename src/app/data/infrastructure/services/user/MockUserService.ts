@@ -51,7 +51,6 @@ export class MockUserService extends UserService {
   async getUserByStatus(status: string, limit: number = 10, offset: number = 0): Promise<User[]> {
     const users = this.users.filter(user => user.status === status || status === 'All');
     this.totalUsers = users.length;
-    console.log("Service", this.totalUsers)
     return users.slice(offset, offset + limit);
   }
 

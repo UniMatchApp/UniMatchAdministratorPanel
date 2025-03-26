@@ -7,7 +7,8 @@ import {Profile} from '../../../../data/domain/models/Profile';
 import {ReportRow} from '../reports/reports.component';
 import {MockUserService} from '../../../../data/infrastructure/services/user/MockUserService';
 import {ReportedUser} from '../../../../data/domain/models/ReportedUser';
-import {ProfileInfo} from '../../../../data/application/services/ProfileService';
+import {ProfileInfo, ProfileService} from '../../../../data/application/services/ProfileService';
+import {UserService} from '../../../../data/application/services/UserService';
 
 @Component({
   selector: 'app-profile',
@@ -25,8 +26,8 @@ export class ProfileComponent implements OnInit {
   reports: ReportedUser[] = [];
 
   constructor(
-    private profileService: MockProfileService,
-    private userService: MockUserService,
+    private profileService: ProfileService,
+    private userService: UserService,
     private route: ActivatedRoute,
     private router: Router
   ) {}

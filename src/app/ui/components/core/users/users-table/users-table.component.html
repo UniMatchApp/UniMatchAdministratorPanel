@@ -16,7 +16,6 @@
   </tr>
   </thead>
   <tbody>
-  <!-- TODO ADD PAGINATION -->
   <tr *ngFor="let user of users" (click)="toggleUserSelection(user)" [class.selected]="selectedUsers.includes(user)">
     <td>
       <div style="display: flex; flex-direction: row; align-items: center; gap: 10px">
@@ -24,7 +23,7 @@
         [checked]="selectedUsers.includes(user)"
         (change)="toggleUserSelection(user)"
       ></app-checkbox-input>
-        <div class="user-info">
+        <div class="user-info" [routerLink]="['/user', user.User.id]">
           <img [src]="user.User.avatar" alt="Avatar" class="user-avatar">
           <div class="user-details">
             <span class="user-name">{{ user.User.name }}</span>

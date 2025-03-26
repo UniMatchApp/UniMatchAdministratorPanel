@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {
   DashboardMetricsComponent
 } from "../../../components/core/dashboard/dashboard-metrics/dashboard-metrics.component";
@@ -23,6 +23,10 @@ import {faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
+
+  @ViewChild(UsersTableComponent) usersTableComponent!: UsersTableComponent; // Agrega la referencia al componente hijo
+
+
   protected metrics: Metrics[] = [];
   protected usersRows: UsersRow[] = [];
   filteredStatus: string = 'All';
@@ -69,8 +73,7 @@ export class UsersComponent implements OnInit {
         })
       );
       this.totalUsers = await this.userService.getTotalUsersNumber();
-
-      console.log(this.totalUsers)
+      this.resetSelectAll();
     } catch (error) {
       console.error('Error loading users:', error);
     }
@@ -91,6 +94,7 @@ export class UsersComponent implements OnInit {
     } else {
       this.loadUsers(this.currentPage);
     }
+    this.resetSelectAll();
   }
 
   async filterUsers(status: string): Promise<void> {
@@ -107,6 +111,7 @@ export class UsersComponent implements OnInit {
     if ((this.currentPage * this.pageSize) < this.totalUsers) {
       this.currentPage++;
       await this.loadUsers(this.currentPage, this.filteredStatus);
+      this.resetSelectAll();
     }
   }
 
@@ -114,6 +119,7 @@ export class UsersComponent implements OnInit {
     if (this.currentPage > 1) {
       this.currentPage--;
       await this.loadUsers(this.currentPage, this.filteredStatus);
+      this.resetSelectAll();
     }
   }
 
@@ -121,6 +127,10 @@ export class UsersComponent implements OnInit {
     return Math.ceil(this.totalUsers / this.pageSize);
   }
 
+  resetSelectAll(): void {
+    this.usersTableComponent.selectAll = false;
+    this.usersTableComponent.selectedUsers = [];
+  }
 
 }
 

@@ -1,21 +1,20 @@
-import { Component, Input } from '@angular/core';
-import { NgForOf } from '@angular/common';
-import { ProfileInfo } from '../../../../../data/application/services/ProfileService';
-import { UsersRow } from '../../../../screens/core/users/users.component';
-import { CheckboxInputComponent } from '../../../shared/checkbox-input/checkbox-input.component';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {UsersRow} from '../../../../screens/core/users/users.component';
+import {CheckboxInputComponent} from '../../../shared/checkbox-input/checkbox-input.component';
+import {RouterLink} from '@angular/router';
+import {NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-users-table',
-  imports: [NgForOf, CheckboxInputComponent],
+  imports: [NgForOf, CheckboxInputComponent, RouterLink],
   templateUrl: './users-table.component.html',
   styleUrls: ['./users-table.component.css']
 })
 export class UsersTableComponent {
 
   @Input() users: UsersRow[] = [];
-
-  selectedUsers: UsersRow[] = [];
   selectAll: boolean = false;
+  selectedUsers: UsersRow[] = [];
 
   toggleUserSelection(user: UsersRow) {
     const index = this.selectedUsers.findIndex(selected => selected.User.id === user.User.id);
@@ -35,6 +34,7 @@ export class UsersTableComponent {
     } else {
       this.selectedUsers = [];
     }
+
   }
 
   updateSelectAllState() {
