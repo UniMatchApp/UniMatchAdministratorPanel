@@ -92,15 +92,18 @@ export class UsersComponent implements OnInit {
           RegistrationDate: user.registrationDate
         };
       }));
+      this.totalUsers = await this.userService.getTotalUsersNumber();
     } else {
       this.loadUsers(this.currentPage);
     }
     this.resetSelectAll();
+    this.currentPage = 1;
   }
 
   async filterUsers(status: string): Promise<void> {
     this.filteredStatus = status;
     await this.loadUsers(this.currentPage, status);
+    this.currentPage = 1;
   }
 
 

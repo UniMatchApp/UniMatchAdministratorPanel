@@ -4,8 +4,8 @@
       <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" alt="avatar">
     </div>
     <div class="profile-details-header-name">
-      <h1>{{name}}</h1>
-      <h1>#123456</h1>
+      <h1>{{ profile?.name }}</h1>
+      <h1>#{{ profile?.userId }}</h1>
     </div>
   </div>
   <div class="profile-details-about">
@@ -23,7 +23,7 @@
 
   <div class="profile-details-activity">
     <h1>Activity</h1>
-    <p><i class="fas fa-map-marker-alt"></i> Location: {{profile?.location}}</p>
+    <p><i class="fas fa-map-marker-alt"></i> Location: {{ getAddressFromCoords() }}</p>
     <p><i class="fas fa-signal"></i> Status: </p>
   </div>
 </div>

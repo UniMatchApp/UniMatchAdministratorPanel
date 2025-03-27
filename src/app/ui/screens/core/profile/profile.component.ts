@@ -22,11 +22,13 @@ import {FaIconComponent} from '@fortawesome/angular-fontawesome';
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent implements OnInit {
-  profile: Profile | null = null;
+  profile: Profile | undefined;
+
   reportRows: ReportRow[] = [];
   reports: ReportedUser[] = [];
+
   currentPage: number = 1;
-  pageSize: number = 8;
+  pageSize: number = 5;
   totalReports: number = 0;
 
   constructor(
@@ -39,13 +41,9 @@ export class ProfileComponent implements OnInit {
   async ngOnInit() {
     this.route.queryParams.subscribe(async params => {
       const userId =  this.route.snapshot.paramMap.get('id');
-
-      console.log('UserId:', userId);
-
       if (userId) {
         try {
           this.profile = await this.profileService.getProfile(userId);
-          console.log('Profile2323:', this.profile);
         } catch (error) {
           console.error('Error al obtener el perfil:', error);
         }
@@ -57,8 +55,7 @@ export class ProfileComponent implements OnInit {
     try {
       await this.userService.loadReports();
       await this.loadReports(this.currentPage);
-      const reports = await this.userService.getReportsBy(ReportType.All, 8, 0);
-      console.log('Reports:', reports);
+      const reports = await this.userService.getReportsBy(ReportType.All, this.pageSize, (this.currentPage-1)*this.pageSize);
       this.reportRows = await Promise.all(
         reports.map(async (report) => {
           const reportedUserProfile = await this.profileService.getProfileInfo(report.reportedUserId);
@@ -71,8 +68,6 @@ export class ProfileComponent implements OnInit {
           };
         })
       );
-
-      console.log('ReportRows:', this.reportRows);
     } catch (error) {
       console.error('Error al obtener los reportes:', error);
     }

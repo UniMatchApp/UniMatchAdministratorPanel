@@ -79,28 +79,28 @@ export class ReportsComponent implements OnInit{
   onFilterTypeChanged(selectedType: string) {
     this.selectedReportType = selectedType;
     const parsedType = this.parseReportTypeEnum(selectedType);
+    this.currentPage = 1;
     this.loadReports(this.currentPage, parsedType);
+
   }
 
   async nextPage()  {
     if ((this.currentPage * this.pageSize) < this.totalReports) {
       this.currentPage++;
+      await this.loadReports(this.currentPage);
     }
   }
 
   async previousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
+      await this.loadReports(this.currentPage);
     }
   }
 
   get totalPages(): number {
     return Math.max(1, Math.ceil(this.totalReports / this.pageSize));
   }
-
-
-
-
 }
 
 export interface ReportRow {

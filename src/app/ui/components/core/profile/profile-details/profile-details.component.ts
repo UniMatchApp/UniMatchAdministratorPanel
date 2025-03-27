@@ -1,7 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ReportRow} from '../../../../screens/core/reports/reports.component';
 import {Profile} from '../../../../../data/domain/models/Profile';
-//import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-profile-details',
@@ -12,18 +10,12 @@ import {Profile} from '../../../../../data/domain/models/Profile';
 })
 export class ProfileDetailsComponent implements OnInit {
 
-  @Input() profile: Profile | null = null;
-  @Input() email: String | undefined;
-  @Input() name: String | undefined;
+  @Input() profile: Profile | undefined;
+  @Input() email: string | undefined;
+  profileLocation: string = 'Dirección no disponible';
 
-
-  constructor(/*private http: HttpClient*/) {}
-
-  ngOnInit(): void {
-    /*if (this.profile?.location) {
-      const { latitude, longitude } = this.profile.location; // Obtener latitud y longitud
-      this.getLocation(latitude, longitude);  // Llamar a la función de geocodificación
-    }*/
+  async ngOnInit() {
+    this.profileLocation =  await this.getAddressFromCoords();
   }
 
   get formattedBirthday(): string {
@@ -32,18 +24,21 @@ export class ProfileDetailsComponent implements OnInit {
     return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
   }
 
-/*getLocation(lat: number, lon: number): void {
-    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`;
 
-    this.http.get<any>(url).subscribe(
-      (data) => {
-        this.locationName = data.display_name || 'Ubicación no disponible';
-      },
-      (error) => {
-        console.error('Error al obtener la ubicación:', error);
-        this.locationName = 'Ubicación no disponible';
-      }
-    );
-  }*/
+  async getAddressFromCoords() {
+    if (!this.profile?.location) {
+      return;
+    }
 
+    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${(this.profile.location.latitude)}&lon=${(this.profile.location.longitude)}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      return data.display_name || 'Dirección no disponible';
+    } catch (error) {
+      console.error("Error fetching address:", error);
+      return;
+    }
+  }
 }
