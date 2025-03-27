@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {NavigationEnd, RouterOutlet} from '@angular/router';
 import {HeaderComponent} from './ui/components/shared/header/header.component';
 import {
   AdministratorSideBarComponent
@@ -9,11 +9,13 @@ import {MockProfileService} from './data/infrastructure/services/profile/MockPro
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {UserService} from './data/application/services/UserService';
 import {ProfileService} from './data/application/services/ProfileService';
+import { Router } from '@angular/router';
+import {NgIf} from '@angular/common';
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderComponent, AdministratorSideBarComponent, FontAwesomeModule],
+  imports: [RouterOutlet, HeaderComponent, AdministratorSideBarComponent, FontAwesomeModule, NgIf],
   templateUrl: './app.component.html',
   standalone: true,
   providers: [
@@ -22,6 +24,13 @@ import {ProfileService} from './data/application/services/ProfileService';
   ],
   styleUrl: './app.component.css'
 })
+
 export class AppComponent {
   title = 'unimatch-administrator';
+
+  constructor(private router: Router) {}
+
+  isLoginPage(): boolean {
+    return this.router.url === '/login';
+  }
 }
