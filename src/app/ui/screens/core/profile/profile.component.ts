@@ -105,12 +105,14 @@ export class ProfileComponent implements OnInit {
   async nextPage()  {
     if ((this.currentPage * this.pageSize) < this.totalReports) {
       this.currentPage++;
+      await this.loadReports(this.currentPage);
     }
   }
 
   async previousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
+      await this.loadReports(this.currentPage);
     }
   }
 

@@ -23,6 +23,7 @@
   flex:1;
   flex-direction: column;
   gap: 10px;
+  justify-content: space-between;
 }
 
 .pagination {
