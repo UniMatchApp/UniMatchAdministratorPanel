@@ -11,7 +11,7 @@
   </thead>
   <tbody>
   <tr *ngFor="let report of reports">
-    <td class="user-reporting" [routerLink]="['/user', report.reportingUser.id]">
+    <td class="user-reporting" [routerLink]="['/admin/user', report.reportingUser.id]">
       <div class="user-info">
         <img [src]="report.reportingUser.avatar" alt="Avatar" class="user-avatar">
         <div class="user-details">
@@ -20,7 +20,7 @@
         </div>
       </div>
     </td>
-    <td class="user-reported" [routerLink]="['/user', report.reportedUser.id]">
+    <td class="user-reported" [routerLink]="['/admin/user', report.reportedUser.id]">
       <div class="user-info">
         <img [src]="report.reportedUser.avatar" alt="Avatar" class="user-avatar">
         <div class="user-details">
