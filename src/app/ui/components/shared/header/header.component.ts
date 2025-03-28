@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import {AuthService} from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -11,10 +12,13 @@ import { CommonModule } from '@angular/common';
 })
 
 export class HeaderComponent {
-  @Input() adminName: string = 'Juan Antonio';
+  @Input() adminName: string = 'Admin';
   isDropdownOpen: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+  ) {}
 
   navigateTo(path: string) {
     this.router.navigate([path]);
@@ -25,6 +29,7 @@ export class HeaderComponent {
   }
 
   logout() {
-    //this.router.navigate(['/login']);
+    this.authService.logout();
+    // this.router.navigate(['/login']);
   }
 }

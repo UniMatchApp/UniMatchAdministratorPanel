@@ -23,7 +23,7 @@
         [checked]="selectedUsers.includes(user)"
         (change)="toggleUserSelection(user)"
       ></app-checkbox-input>
-        <div class="user-info" [routerLink]="['/user', user.User.id]">
+        <div class="user-info" [routerLink]="['/admin/user', user.User.id]">
           <img [src]="user.User.avatar" alt="Avatar" class="user-avatar">
           <div class="user-details">
             <span class="user-name">{{ user.User.name }}</span>

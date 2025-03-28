@@ -3,6 +3,7 @@ import { SessionStorageService } from 'angular-web-storage';
 import { UserService } from '../../data/application/services/UserService';
 import { User } from '../../data/domain/models/User';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Status } from '../../ui/screens/core/users/users.component';
 
 @Injectable({
   providedIn: 'root',
