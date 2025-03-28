@@ -3,6 +3,7 @@ import {User} from '../../../domain/models/User';
 import {createMetrics, createMocksUsers, createMockUsers, createStadistics} from '../../mocks/UserMock';
 import {ReportedUser} from '../../../domain/models/ReportedUser';
 import {createMockReports} from '../../mocks/ReportsMock';
+import {Status} from '../../../../ui/screens/core/users/users.component';
 
 export class MockUserService extends UserService {
 
@@ -11,8 +12,16 @@ export class MockUserService extends UserService {
   private totalUsers = 0;
   private totalReports =  0;
 
-  async login(email: string, password: string): Promise<void> {
-    console.log(`Mock login with email: ${email}`);
+  async login(email: string, password: string): Promise<User> {
+    return new User(
+      "12321",
+      new Date(),
+      email,
+      [],
+      [],
+      true,
+      Status.Active
+    )
   }
 
   async logout(): Promise<void> {

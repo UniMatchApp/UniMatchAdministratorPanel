@@ -12,7 +12,6 @@ import {ProfileService} from './data/application/services/ProfileService';
 import { Router } from '@angular/router';
 import {NgIf} from '@angular/common';
 
-
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, HeaderComponent, AdministratorSideBarComponent, FontAwesomeModule, NgIf],
@@ -21,6 +20,7 @@ import {NgIf} from '@angular/common';
   providers: [
     { provide: UserService, useClass: MockUserService },
     { provide: ProfileService, useClass: MockProfileService },
+
   ],
   styleUrl: './app.component.css'
 })

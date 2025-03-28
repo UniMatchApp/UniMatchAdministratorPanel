@@ -52,7 +52,7 @@ export enum ReportType {
   providedIn: 'root'
 })
 export abstract class UserService {
-  abstract login(email: string, password: string): Promise<void>;
+  abstract login(email: string, password: string): Promise<User>;
   abstract logout(): Promise<void>;
   abstract getCurrentUser(): Promise<User>;
   abstract loadAllUsers(): Promise<void>;

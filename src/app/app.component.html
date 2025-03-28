@@ -1,5 +1,5 @@
 <div class="app-container">
-  <app-header></app-header>
+  <app-header *ngIf="!isLoginPage()"></app-header>
   <div class="container">
     <app-administrator-side-bar *ngIf="!isLoginPage()"></app-administrator-side-bar>
     <div class="content">

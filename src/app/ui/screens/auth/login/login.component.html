@@ -8,15 +8,18 @@
       <span class="account-text"> your account</span>
     </h1>
 
-    <div class="input-group">
-      <label for="email">Email</label>
-      <input type="text" id="email" placeholder="Enter email">
-    </div>
+    <form (ngSubmit)="onLogin()">
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="text" id="email" [(ngModel)]="email" name="email" placeholder="Enter email" required>
+      </div>
 
-    <div class="input-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" placeholder="Enter password">
-    </div>
-    <button>Log in</button>
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" [(ngModel)]="password" name="password" placeholder="Enter password" required>
+      </div>
+
+      <button type="submit">Log in</button>
+    </form>
   </div>
 </div>

@@ -4,18 +4,22 @@ import { ReportsComponent } from './ui/screens/core/reports/reports.component';
 import { UsersComponent } from './ui/screens/core/users/users.component';
 import {ProfileComponent} from './ui/screens/core/profile/profile.component';
 import {LoginComponent} from './ui/screens/auth/login/login.component';
-import {AuthGuard} from './services/auth-service.service';
+import {authGuard} from './services/auth.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/admin/dashboard', pathMatch: 'full' },
+  { path: '',
+    redirectTo: '/admin/dashboard',
+    pathMatch: 'full',
+  },
   {
     path: 'admin',
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'reports', component: ReportsComponent },
-      { path: 'users', component: UsersComponent }
-    ]
+      { path: 'users', component: UsersComponent },
+      { path: 'user/:id', component: ProfileComponent}
+    ],
+    canActivate: [authGuard],
   },
-  { path: 'user/:id', component: ProfileComponent},
   { path: 'login', component: LoginComponent }
 ];
