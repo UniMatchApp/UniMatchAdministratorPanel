@@ -33,21 +33,13 @@ header {
   border-radius: 50%;
 }
 
-.admin-name{
-  cursor: pointer;
-}
-
-.dropdown-menu {
+.log-out-button {
   background: var(--mainColorBackground);
   border-radius: 5px;
   text-align: center;
   list-style: none;
   padding: 10px;
   cursor: pointer;
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
-}
-
-.rotate {
-  transform: rotate(180deg);
-  transition: transform 0.3s;
+  color: var(--mainTextWhite);
+  border : none;
 }

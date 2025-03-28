@@ -13,7 +13,6 @@ import {AuthService} from '../../../../services/auth.service';
 
 export class HeaderComponent {
   @Input() adminName: string = 'Admin';
-  isDropdownOpen: boolean = false;
 
   constructor(
     private router: Router,
@@ -24,12 +23,8 @@ export class HeaderComponent {
     this.router.navigate([path]);
   }
 
-  toggleDropdown() {
-    this.isDropdownOpen = !this.isDropdownOpen;
-  }
-
   logout() {
     this.authService.logout();
-    // this.router.navigate(['/login']);
+    this.router.navigate(['/login']);
   }
 }

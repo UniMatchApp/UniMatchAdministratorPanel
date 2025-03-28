@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { SessionStorageService } from 'angular-web-storage';
 import { UserService } from '../../data/application/services/UserService';
 import { User } from '../../data/domain/models/User';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Status } from '../../ui/screens/core/users/users.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +15,7 @@ export class LoginService {
   constructor(
     private sessionStorageService: SessionStorageService,
     private userService: UserService
-  ) {}
+  ) {  }
 
   async login(email: string, password: string): Promise<boolean> {
     try {
@@ -39,22 +38,22 @@ export class LoginService {
     }
   }
 
+  isLoggedIn$() {
+    return this.isLoggedIn;
+  }
+
   logout() {
     this.clearSession();
   }
 
   private storeUser(user: User) {
-    this.sessionStorageService.set('admin', user);
+    this.sessionStorageService.set('bearer-token', user);
   }
 
   private clearSession() {
-    this.sessionStorageService.remove('admin');
+    this.sessionStorageService.remove('bearer-token');
     this.isLoggedIn.next(false);
     this.loginObjectSubject.next(undefined);
-  }
-
-  isLoggedIn$() {
-    return this.isLoggedIn;
   }
 
   getCurrentUser() {

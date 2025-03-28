@@ -73,7 +73,6 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  //ABSTRAER LO DE ABAJO SI SE PUEDE JUNTO AL DE REPORTS
   private parseReportTypeEnum(reportType: string) {
     return ReportType[reportType as keyof typeof ReportType] || ReportType.All;
   }

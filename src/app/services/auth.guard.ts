@@ -6,12 +6,17 @@ import { inject } from '@angular/core';
 export const authGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
-): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
+):
+  Observable<boolean | UrlTree>
+  | Promise<boolean | UrlTree>
+  | boolean
+  | UrlTree => {
 
-  const authService = inject(AuthService);  // Inyecta AuthService directamente
+  const authService = inject(AuthService);
   const router = inject(Router);
 
-  return authService.isLoggedIn().pipe(
-    map(isLoggedIn => isLoggedIn ? true : router.createUrlTree(['/login']))
-  );
+  return authService.isLoggedIn().pipe(map((isLoggedIn: boolean) => {
+    console.log('isLoggedIn', isLoggedIn);
+    return isLoggedIn ? true : router.createUrlTree(['/login']);
+  }));
 };
