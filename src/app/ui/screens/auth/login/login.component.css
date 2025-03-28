@@ -16,7 +16,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 30px;
+    gap: 40px;
 }
 
 .login-inside-container h1{
@@ -30,6 +30,14 @@
 .account-text {
   color: var(--mainTextWhite);
 }
+
+.login-fields {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 20px;
+}
+
 
 .input-group {
   display: flex;
