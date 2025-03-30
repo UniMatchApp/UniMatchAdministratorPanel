@@ -12,16 +12,17 @@ export class MockUserService extends UserService {
   private totalUsers = 0;
   private totalReports =  0;
 
-  async login(email: string, password: string): Promise<User> {
-    return new User(
-      "12321",
-      new Date(),
-      email,
-      [],
-      [],
-      true,
-      Status.Active
-    )
+  async login(email: string, password: string): Promise<string> {
+    // return new User(
+    //   "12321",
+    //   new Date(),
+    //   email,
+    //   [],
+    //   [],
+    //   true,
+    //   Status.Active
+    // )
+    return "12321";
   }
 
   async logout(): Promise<void> {

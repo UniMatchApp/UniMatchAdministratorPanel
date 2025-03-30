@@ -5,19 +5,32 @@ import {Status} from '../../../../ui/screens/core/users/users.component';
 import {createMetrics, createMocksUsers, createMockUsers, createStadistics} from '../../mocks/UserMock';
 import {createMockReports} from '../../mocks/ReportsMock';
 import {UserController} from '../../../controller/UserController';
+import {firstValueFrom} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
 
 export class ApiUserService extends UserService {
   private users: User[] = [];
   private reports: ReportedUser[] = [];
   private totalUsers = 0;
   private totalReports =  0;
+  private userController;
 
-  constructor(private userController: UserController) {
+  constructor(private http: HttpClient) {
     super();
+    this.userController = new UserController(this.http);
   }
-  async login(email: string, password: string): Promise<User> {
-    throw new Error('Method not implemented.');
+
+  async login(email: string, password: string): Promise<string> {
+    try {
+      const response = await firstValueFrom(this.userController.login(email, password));
+
+      return response.Token;
+    } catch (error) {
+      console.error('Error en login:', error);
+      throw new Error('Error al iniciar sesión');
+    }
   }
+
 
   async logout(): Promise<void> {
     throw new Error('Method not implemented.');

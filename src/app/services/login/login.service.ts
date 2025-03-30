@@ -10,7 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 export class LoginService {
 
   private isLoggedIn = new BehaviorSubject<boolean>(false);
-  private loginObjectSubject = new BehaviorSubject<User | undefined>(undefined);
+  private loginObjectSubject = new BehaviorSubject<string | undefined>(undefined);
 
   constructor(
     private sessionStorageService: SessionStorageService,
@@ -20,12 +20,12 @@ export class LoginService {
   async login(email: string, password: string): Promise<boolean> {
     try {
 
-      const user = await this.userService.login(email, password);
+      const token = await this.userService.login(email, password);
 
-      if (user) {
+      if (token) {
         this.isLoggedIn.next(true);
-        this.loginObjectSubject.next(user);
-        this.storeUser(user);
+        this.loginObjectSubject.next(token);
+        this.storeToken (token);
         return true;
       } else {
         this.clearSession();
@@ -46,8 +46,8 @@ export class LoginService {
     this.clearSession();
   }
 
-  private storeUser(user: User) {
-    this.sessionStorageService.set('bearer-token', user);
+  private storeToken(token: string) {
+    this.sessionStorageService.set('bearer-token', token);
   }
 
   private clearSession() {
