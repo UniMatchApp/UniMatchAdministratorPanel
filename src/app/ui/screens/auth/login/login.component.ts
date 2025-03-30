@@ -14,6 +14,7 @@ import {Router} from '@angular/router';
 export class LoginComponent {
   email: string = '';
   password: string = '';
+  passwordVisible: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -24,5 +25,9 @@ export class LoginComponent {
     if(await this.authService.login(this.email, this.password)) {
       this.router.navigate(['admin/dashboard']);
     }
+  }
+
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
   }
 }

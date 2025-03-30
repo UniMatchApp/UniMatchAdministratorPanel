@@ -9,16 +9,25 @@
     </h1>
 
     <form (ngSubmit)="onLogin()" class="login-fields">
-      <div class="input-group">
+      <div class="email-input">
         <label for="email">Email</label>
         <input type="text" id="email" [(ngModel)]="email" name="email" placeholder="Enter email" required>
       </div>
 
-      <div class="input-group">
+      <div class="password-input">
         <label for="password">Password</label>
-        <input type="password" id="password" [(ngModel)]="password" name="password" placeholder="Enter password" required>
+        <div class="password-container">
+          <input [type]="passwordVisible ? 'text' : 'password'"
+                 id="password"
+                 [(ngModel)]="password"
+                 name="password"
+                 placeholder="Enter password"
+                 required>
+          <button type="button" class="toggle-password" (click)="togglePasswordVisibility()">
+            <i class="fa" [ngClass]="passwordVisible ? 'fa-eye-slash' : 'fa-eye'"></i>
+          </button>
+        </div>
       </div>
-
       <button type="submit">Log in</button>
     </form>
   </div>

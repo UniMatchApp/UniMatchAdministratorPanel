@@ -1,5 +1,5 @@
 import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Observable, map, switchMap } from 'rxjs';
 import { AuthService } from './auth.service';
 import { inject } from '@angular/core';
 
@@ -15,8 +15,14 @@ export const authGuard: CanActivateFn = (
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  return authService.isLoggedIn().pipe(map((isLoggedIn: boolean) => {
-    console.log('isLoggedIn', isLoggedIn);
-    return isLoggedIn ? true : router.createUrlTree(['/login']);
-  }));
+  return authService.isLoggedIn().pipe(
+    switchMap((isLoggedIn: boolean) => {
+      console.log('isLoggedIn', isLoggedIn);
+      if (isLoggedIn) {
+        return [true];
+      } else {
+        return [router.createUrlTree(['/login'])];
+      }
+    })
+  ) as Observable<boolean | UrlTree>;
 };

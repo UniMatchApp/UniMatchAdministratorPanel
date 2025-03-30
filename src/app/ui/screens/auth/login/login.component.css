@@ -33,37 +33,42 @@
 
 .login-fields {
   display: flex;
-  width: 100%;
+  flex: 1;
   flex-direction: column;
   gap: 20px;
 }
 
-
-.input-group {
+.email-input, .password-input {
   display: flex;
   flex-direction: column;
   text-align: left;
-  width: 100%;
 }
 
-.input-group label {
+.password-input {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.email-input label {
   display: block;
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-.input-group input {
+.email-input input, .password-input input {
   padding: 10px;
   border: none;
   background: transparent;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.25);;
   outline: none;
   font-size: 16px;
   color: rgba(255, 255, 255, 0.25);;
 }
 
-.input-group input::placeholder {
+.email-input input {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.email-input input::placeholder {
   color: rgba(255, 255, 255, 0.25);;
 }
 
@@ -80,4 +85,43 @@ button {
 
 button:hover {
   opacity: 0.8;
+}
+
+.password-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.toggle-password {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #555;
+}
+.email-input input:focus,
+.email-input input:not(:placeholder-shown) {
+  color: white;
+  border-bottom-color: white;
+}
+
+.password-input input:focus,
+.password-input input:not(:placeholder-shown) {
+  color: white;
+}
+
+.password-input:has(input:focus),
+.password-input:has(input:not(:placeholder-shown)) {
+  border-bottom-color: white;
+}
+
+.password-input:has(input:focus) .toggle-password i,
+.password-input:has(input:not(:placeholder-shown)) .toggle-password i {
+  color: white;
+}
+
+.email-input input::placeholder,
+.password-input input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
 }
