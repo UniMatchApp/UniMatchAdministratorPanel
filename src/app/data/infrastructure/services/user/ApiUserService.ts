@@ -49,9 +49,30 @@ export class ApiUserService extends UserService {
   }
 
   async loadAllUsers(): Promise<void> {
-    // this.users = await firstValueFrom(this.userController.loadAllUsers());
+    const userDTOs = await firstValueFrom(this.userController.loadAllUsers());
+
+    console.log("Userdtot: ", userDTOs);
+    this.users = userDTOs.map(userDTO =>
+      new User(
+      userDTO.id,
+      new Date(userDTO.registrationDate),
+      userDTO.email,
+      userDTO.blockedUsers || [],
+      userDTO.reportedUsers.map(reportedUserId => new ReportedUser(
+        reportedUserId,
+        "",
+        new Date().toISOString(),
+        ReportType.All,
+        "",
+        "",
+      )),
+      userDTO.registered,
+    ));
+
+
     this.totalUsers = this.users.length;
   }
+
 
   async getReportsBy(reportType: ReportType = ReportType.All, limit: number = 10, offset: number = 0): Promise<ReportedUser[]> {
     throw new Error('Method not implemented.');

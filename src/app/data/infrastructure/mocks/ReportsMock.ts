@@ -17,7 +17,7 @@ export function createMockReports(): ReportedUser[] {
     const reportType = reportTypes[Math.floor(Math.random() * reportTypes.length)] as ReportType;
     const reportMessage = REPORT_MESSAGES[reportType as Exclude<ReportType, ReportType.All>];
 
-    reports.push(new ReportedUser(reporterId, reportedId, reportType, reportMessage));
+    reports.push(new ReportedUser(reporterId, reportedId, "25/02/2025", reportType, reportMessage));
   }
 
   return reports;

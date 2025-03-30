@@ -62,8 +62,21 @@ export class UserController {
   }
 
   loadAllUsers(): Observable<UserDTO[]> {
-    return this.http.get<UserDTO[]>(`${this.apiURL}/users`);
+    return this.http.get<{ value: UserDTO[] }>(`${this.apiURL}`).pipe(
+      map((response) =>
+        response.value.map(user => ({
+          id: user.id,
+          email: user.email,
+          registered: user.registered,
+          registrationDate: user.registrationDate,
+          blockedUsers: user.blockedUsers || [],
+          reportedUsers: user.reportedUsers || []
+        }))
+      )
+    );
   }
+
+
 
   getCurrentUser(): Observable<User> {
     return this.http.get<User>(`${this.apiURL}/current`);

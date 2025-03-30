@@ -18,12 +18,12 @@ export class LoginService {
     private sessionStorageService: SessionStorageService,
     private userService: UserService
   ) {
-    this.checkTokenValidation().then(
-      isValid => {
-        console.log('Resultado de la validación del token:', isValid);
-        this.isLoggedIn.next(isValid);
-      }
-    );
+    // this.checkTokenValidation().then(
+    //   isValid => {
+    //     console.log('Resultado de la validación del token:', isValid);
+    //     this.isLoggedIn.next(isValid);
+    //   }
+    // );
 
   }
 
