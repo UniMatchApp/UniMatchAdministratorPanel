@@ -17,7 +17,7 @@ export const authGuard: CanActivateFn = (
 
   return authService.isLoggedIn().pipe(
     switchMap((isLoggedIn: boolean) => {
-      console.log('isLoggedIn', isLoggedIn);
+
       if (isLoggedIn) {
         return [true];
       } else {

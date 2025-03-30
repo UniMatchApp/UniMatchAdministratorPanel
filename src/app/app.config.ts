@@ -7,6 +7,7 @@ import {UserService} from './data/application/services/UserService';
 import {MockProfileService} from './data/infrastructure/services/profile/MockProfileService';
 import {ProfileService} from './data/application/services/ProfileService';
 import {ApiUserService} from './data/infrastructure/services/user/ApiUserService';
+import {ApiProfileService} from './data/infrastructure/services/profile/ApiProfileService';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +15,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     { provide: UserService, useClass: ApiUserService, deps: [HttpClient] },
-    { provide: ProfileService, useClass: MockProfileService },
+    { provide: ProfileService, useClass: ApiProfileService, deps: [HttpClient] },
   ],
 };

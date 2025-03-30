@@ -30,7 +30,7 @@ export class ApiUserService extends UserService {
   async validateSession(token: string): Promise<boolean> {
     try {
       const reposne = await firstValueFrom(this.userController.validateSession(token));
-      console.log("Pene",reposne);
+
       return reposne;
     } catch (error) {
       console.error('Error en la validación de sesión:', error);
@@ -51,7 +51,6 @@ export class ApiUserService extends UserService {
   async loadAllUsers(): Promise<void> {
     const userDTOs = await firstValueFrom(this.userController.loadAllUsers());
 
-    console.log("Userdtot: ", userDTOs);
     this.users = userDTOs.map(userDTO =>
       new User(
       userDTO.id,

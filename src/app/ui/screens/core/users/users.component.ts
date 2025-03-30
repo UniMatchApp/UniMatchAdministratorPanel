@@ -49,7 +49,7 @@ export class UsersComponent implements OnInit {
       await Promise.all([
             this.userService.loadAllUsers(),
             this.totalUsers = await this.userService.getTotalUsersNumber(),
-            this.metrics = await this.userService.getMetrics()
+            // this.metrics = await this.userService.getMetrics()
       ]);
       await this.loadUsers(this.currentPage);
     } catch (error) {
@@ -67,6 +67,7 @@ export class UsersComponent implements OnInit {
           const profile = await this.profileService.getProfileInfo(user.id);
           return {
             User: profile,
+            Email: user.email,
             Reported: user.reportedUsers.length,
             Status: user.status,
             RegistrationDate: user.registrationDate
@@ -87,6 +88,7 @@ export class UsersComponent implements OnInit {
       this.usersRows = await Promise.all(users.map(async user => {
         return {
           User: await this.profileService.getProfileInfo(user.id),
+          Email: user.email,
           Reported: user.reportedUsers.length,
           Status: user.status,
           RegistrationDate: user.registrationDate
@@ -140,6 +142,7 @@ export class UsersComponent implements OnInit {
 
 export interface UsersRow {
   User: ProfileInfo;
+  Email: string;
   Reported: number;
   Status: Status;
   RegistrationDate: Date;

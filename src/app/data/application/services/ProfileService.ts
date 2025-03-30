@@ -12,6 +12,7 @@ export abstract class ProfileService {
 export class ProfileInfo {
   id: string;
   name: string;
+
   email: string;
   avatar: string
 
