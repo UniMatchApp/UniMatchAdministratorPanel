@@ -10,12 +10,22 @@ import { BehaviorSubject } from 'rxjs';
 export class LoginService {
 
   private isLoggedIn = new BehaviorSubject<boolean>(false);
+
+
   private loginObjectSubject = new BehaviorSubject<string | undefined>(undefined);
 
   constructor(
     private sessionStorageService: SessionStorageService,
     private userService: UserService
-  ) {  }
+  ) {
+    this.checkTokenValidation().then(
+      isValid => {
+        console.log('Resultado de la validación del token:', isValid);
+        this.isLoggedIn.next(isValid);
+      }
+    );
+
+  }
 
   async login(email: string, password: string): Promise<boolean> {
     try {
@@ -36,6 +46,20 @@ export class LoginService {
       this.clearSession();
       return false;
     }
+  }
+
+  async checkTokenValidation(): Promise<boolean> {
+    const token = this.sessionStorageService.get('bearer-token');
+    if (token) {
+      try {
+        return await this.userService.validateSession(token);
+      } catch (error) {
+        console.error('Error al validar el token:', error);
+        this.clearSession();
+        return false;
+      }
+    }
+    return false;
   }
 
   isLoggedIn$() {

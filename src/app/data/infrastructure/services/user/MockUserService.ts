@@ -78,4 +78,8 @@ export class MockUserService extends UserService {
   async getTotalReportsNumber(): Promise<number> {
     return this.totalReports;
   }
+
+  async validateSession(token: string): Promise<boolean> {
+    return true;
+  }
 }

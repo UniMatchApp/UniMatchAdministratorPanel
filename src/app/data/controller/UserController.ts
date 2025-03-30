@@ -1,9 +1,10 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {map, Observable} from 'rxjs';
+import {map, Observable, tap} from 'rxjs';
 import {Metrics, ReportType, Statistics} from '../application/services/UserService';
 import {ReportedUser} from '../domain/models/ReportedUser';
 import {User} from '../domain/models/User';
+import {response} from 'express';
 
 export interface UserDTO {
   id: string;
@@ -47,13 +48,28 @@ export class UserController {
     );
   }
 
+  validateSession(token: string): Observable<boolean> {
+    return this.http.post<{ valid: boolean } >(
+      `${this.apiURL}/auth`,
+      { token }
+    ).pipe(
+      tap(response => console.log("Response", response)
+      ),
+      map(response => {
+        return response.valid;
+      })
+    );
+  }
+
+  loadAllUsers(): Observable<UserDTO[]> {
+    return this.http.get<UserDTO[]>(`${this.apiURL}/users`);
+  }
+
   getCurrentUser(): Observable<User> {
     return this.http.get<User>(`${this.apiURL}/current`);
   }
 
-  loadAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiURL}/users`);
-  }
+
 
   getUsersByName(name: string, limit: number = 10, offset: number = 0): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiURL}/users/search`, { params: { name, limit: limit.toString(), offset: offset.toString() } });

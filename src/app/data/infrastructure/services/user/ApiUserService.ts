@@ -1,9 +1,6 @@
 import {Metrics, ReportType, Statistics, UserService} from '../../../application/services/UserService';
 import {User} from '../../../domain/models/User';
 import {ReportedUser} from '../../../domain/models/ReportedUser';
-import {Status} from '../../../../ui/screens/core/users/users.component';
-import {createMetrics, createMocksUsers, createMockUsers, createStadistics} from '../../mocks/UserMock';
-import {createMockReports} from '../../mocks/ReportsMock';
 import {UserController} from '../../../controller/UserController';
 import {firstValueFrom} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
@@ -23,13 +20,24 @@ export class ApiUserService extends UserService {
   async login(email: string, password: string): Promise<string> {
     try {
       const response = await firstValueFrom(this.userController.login(email, password));
-
       return response.Token;
     } catch (error) {
       console.error('Error en login:', error);
       throw new Error('Error al iniciar sesión');
     }
   }
+
+  async validateSession(token: string): Promise<boolean> {
+    try {
+      const reposne = await firstValueFrom(this.userController.validateSession(token));
+      console.log("Pene",reposne);
+      return reposne;
+    } catch (error) {
+      console.error('Error en la validación de sesión:', error);
+      throw new Error('Error al validar la sesión');
+    }
+  }
+
 
 
   async logout(): Promise<void> {
@@ -41,7 +49,8 @@ export class ApiUserService extends UserService {
   }
 
   async loadAllUsers(): Promise<void> {
-    throw new Error('Method not implemented.');
+    // this.users = await firstValueFrom(this.userController.loadAllUsers());
+    this.totalUsers = this.users.length;
   }
 
   async getReportsBy(reportType: ReportType = ReportType.All, limit: number = 10, offset: number = 0): Promise<ReportedUser[]> {
@@ -61,15 +70,19 @@ export class ApiUserService extends UserService {
   }
 
   async getUsersByName(name: string, limit: number = 10, offset: number = 0): Promise<User[]> {
-    throw new Error('Method not implemented.');
+    const users = this.users.filter(user => user.email.includes(name));
+    this.totalUsers = users.length;
+    return users.slice(offset, offset + limit);
   }
 
   async getUserByStatus(status: string, limit: number = 10, offset: number = 0): Promise<User[]> {
-    throw new Error('Method not implemented.');
+    const users = this.users.filter(user => user.status === status || status === 'All');
+    this.totalUsers = users.length;
+    return users.slice(offset, offset + limit);
   }
 
   async getTotalUsersNumber(): Promise<number> {
-    throw new Error('Method not implemented.');
+    return this.totalUsers;
   }
 
   async loadReports(): Promise<void> {
@@ -78,4 +91,6 @@ export class ApiUserService extends UserService {
   async getTotalReportsNumber(): Promise<number> {
     throw new Error('Method not implemented.');
   }
+
+
 }

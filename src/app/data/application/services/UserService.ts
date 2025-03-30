@@ -65,4 +65,5 @@ export abstract class UserService {
   abstract getTotalUsersNumber(): Promise<number>;
   abstract loadReports(): Promise<void>;
   abstract getTotalReportsNumber(): Promise<number>;
+  abstract validateSession(token: string): Promise<boolean>;
 }
