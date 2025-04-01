@@ -9,6 +9,7 @@ import {ProfileService} from '../../../../data/application/services/ProfileServi
 import {ReportType, UserService} from '../../../../data/application/services/UserService';
 import {faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
+import {User} from '../../../../data/domain/models/User';
 
 @Component({
   selector: 'app-profile',
@@ -23,6 +24,7 @@ import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 })
 export class ProfileComponent implements OnInit {
   profile: Profile | undefined;
+  user: User | undefined;
 
   reportRows: ReportRow[] = [];
   reports: ReportedUser[] = [];
@@ -44,6 +46,7 @@ export class ProfileComponent implements OnInit {
       if (userId) {
         try {
           this.profile = await this.profileService.getProfile(userId);
+          this.user = await this.userService.getCurrentUser(userId);
         } catch (error) {
           console.error('Error al obtener el perfil:', error);
         }

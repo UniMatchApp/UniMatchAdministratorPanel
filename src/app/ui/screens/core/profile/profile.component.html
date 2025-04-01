@@ -1,6 +1,6 @@
 <div class="profile-container">
   <div class="profile-inside-container">
-    <app-profile-details [profile]="profile" ></app-profile-details>
+    <app-profile-details [profile]="profile" [email]="user?.email"></app-profile-details>
     <div class="profile-table">
       <app-reports-list [reports]="reportRows"></app-reports-list>
       <div class="pagination">

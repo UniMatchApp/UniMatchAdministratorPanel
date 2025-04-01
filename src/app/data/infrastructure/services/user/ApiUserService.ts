@@ -44,8 +44,8 @@ export class ApiUserService extends UserService {
     throw new Error('Method not implemented.');
   }
 
-  async getCurrentUser(): Promise<User> {
-    throw new Error('Method not implemented.');
+  async getCurrentUser(id: string): Promise<User | undefined> {
+    return this.users.find(user => user.id === id) ?? undefined;
   }
 
   async loadAllUsers(): Promise<void> {

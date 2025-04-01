@@ -54,7 +54,7 @@ export enum ReportType {
 export abstract class UserService {
   abstract login(email: string, password: string): Promise<string>;
   abstract logout(): Promise<void>;
-  abstract getCurrentUser(): Promise<User>;
+  abstract getCurrentUser(id: string): Promise<User | undefined>;
   abstract loadAllUsers(): Promise<void>;
   abstract getReportsBy(reportType: ReportType, limit: number, offset: number): Promise<ReportedUser[]>;
   abstract getUserReports(): Promise<ReportedUser[]>;
