@@ -61,8 +61,9 @@ export class LoginService {
     return false;
   }
 
-  isLoggedIn$() {
-    return this.isLoggedIn;
+  async isLoggedIn$() {
+    // return this.isLoggedIn;
+    return await this.checkTokenValidation();
   }
 
   logout() {

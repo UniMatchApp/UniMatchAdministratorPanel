@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LoginService } from './login/login.service';
-import { Observable} from 'rxjs';
+import {from, Observable} from 'rxjs';
 import {UserService} from '../data/application/services/UserService';
 
 @Injectable({
@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   isLoggedIn(): Observable<boolean> {
-    return this.loginService.isLoggedIn$();
+    return from(this.loginService.isLoggedIn$());
   }
 
 }

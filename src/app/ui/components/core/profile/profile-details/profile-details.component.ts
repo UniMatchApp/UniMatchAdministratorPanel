@@ -13,10 +13,10 @@ export class ProfileDetailsComponent implements OnInit {
 
   @Input() profile: Profile | undefined;
   @Input() user: User | undefined;
-  profileLocation: string = 'Dirección no disponible';
+  address: string = "Dirección no disponible";
 
   async ngOnInit() {
-    this.profileLocation =  await this.getAddressFromCoords();
+    await this.getAddressFromCoords();
   }
 
   get formattedBirthday(): string {
@@ -37,15 +37,19 @@ export class ProfileDetailsComponent implements OnInit {
       return;
     }
 
-    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${(this.profile.location.latitude)}&lon=${(this.profile.location.longitude)}`;
+
+    const url = `https://api.opencagedata.com/geocode/v1/json?q=${this.profile.location.latitude},${this.profile.location.longitude}&key=8706d481b436496a91ee3977d7d3b9e8`;
 
     try {
       const response = await fetch(url);
       const data = await response.json();
-      return data.display_name || 'Dirección no disponible';
+
+      console.log("Response from OpenCage:", data);
+      this.address = data.results?.[0]?.formatted || 'Dirección no disponible';
     } catch (error) {
       console.error("Error fetching address:", error);
       return;
     }
   }
+
 }
