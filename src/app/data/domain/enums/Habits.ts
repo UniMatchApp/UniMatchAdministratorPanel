@@ -4,3 +4,4 @@ export enum Habits {
   FREQUENTLY = "FREQUENTLY",
   DAILY = "DAILY"
 }
+

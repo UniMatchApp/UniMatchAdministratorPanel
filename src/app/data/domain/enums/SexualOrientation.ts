@@ -5,3 +5,4 @@ export enum SexualOrientation {
   ASEXUAL = "ASEXUAL",
   OTHER = "OTHER"
 }
+

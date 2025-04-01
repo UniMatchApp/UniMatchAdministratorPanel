@@ -5,3 +5,4 @@ export enum RelationshipType {
   OPEN = "OPEN",
   OTHER = "OTHER"
 }
+

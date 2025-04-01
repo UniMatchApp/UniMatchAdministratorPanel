@@ -5,6 +5,37 @@ import {ProfileInfo} from '../application/services/ProfileService';
 import {Profile} from '../domain/models/Profile';
 
 
+export interface ProfileDTO {
+  profileId: string;
+  userId: string;
+  name: string;
+  age: number;
+  aboutMe: string;
+  location?: { latitude: number, longitude: number, altitude?: number };
+  gender: string;
+  sexualOrientation: string;
+  relationshipType: string;
+  birthday: Date;
+  interests: string[];
+  wall: string[];
+  preferredImage: string;
+  maxDistance: number;
+  ageRange: { min: number, max: number}
+  horoscope?: string;
+  height?: number;
+  weight?: number;
+  job?: string;
+  education?: string;
+  personalityType?: string;
+  pets?: string;
+  drinks?: string;
+  smokes?: string;
+  doesSports?: string;
+  valuesAndBeliefs?: string;
+  genderPriority?: string;
+  fact?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,11 +53,12 @@ export class ProfileController {
       ));
   }
 
-  getProfile(userId: string): Observable<Profile> {
-    return this.http.get<{ value: Profile }>(
+  getProfile(userId: string): Observable<ProfileDTO> {
+    return this.http.get<{ value: ProfileDTO }>(
       `${this.apiURL}/${userId}`
     ).pipe(
-      map(response => response.value)
-    );
+      map(response =>
+        response.value
+      ));
   }
 }
