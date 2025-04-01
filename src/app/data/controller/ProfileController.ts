@@ -40,13 +40,13 @@ export interface ProfileDTO {
   providedIn: 'root'
 })
 export class ProfileController {
-  private apiURL: string = 'http://localhost:3000/api/v1/users/profile';
+  private apiURL: string = 'http://localhost:3000/api/v1/users';
 
   constructor(private http: HttpClient) {}
 
   getProfileInfo(userId: string): Observable<ProfileInfo> {
     return this.http.get<{ value: ProfileInfo }>(
-      `${this.apiURL}/${userId}/info`
+      `${this.apiURL}/profile/${userId}/info`
     ).pipe(
       map(response =>
         response.value
