@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Profile} from '../../../../../data/domain/models/Profile';
+import {User} from '../../../../../data/domain/models/User';
 
 @Component({
   selector: 'app-profile-details',
@@ -11,7 +12,7 @@ import {Profile} from '../../../../../data/domain/models/Profile';
 export class ProfileDetailsComponent implements OnInit {
 
   @Input() profile: Profile | undefined;
-  @Input() email: string | undefined;
+  @Input() user: User | undefined;
   profileLocation: string = 'Dirección no disponible';
 
   async ngOnInit() {
@@ -23,6 +24,12 @@ export class ProfileDetailsComponent implements OnInit {
     const date = new Date(this.profile.birthday);
     return date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
   }
+
+  formatUserId(userId?: string): string {
+    if (!userId || userId.length < 6) return userId ?? "N/A"; // Si es muy corto, lo devuelve tal cual
+    return `${userId.slice(0, 4)} **** ${userId.slice(-2)}`;
+  }
+
 
 
   async getAddressFromCoords() {

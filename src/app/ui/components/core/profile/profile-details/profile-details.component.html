@@ -1,16 +1,16 @@
 <div class="profile-details-container">
   <div class="profile-details-header">
     <div class="profile-details-header-avatar">
-      <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" alt="avatar">
+      <img [src]="profile?.preferredImage" alt="avatar">
     </div>
     <div class="profile-details-header-name">
       <h1>{{ profile?.name }}</h1>
-      <h1>#{{ profile?.userId }}</h1>
+      <h1>#{{ formatUserId(profile?.userId) }}</h1>
     </div>
   </div>
   <div class="profile-details-about">
     <h1>About</h1>
-    <p><i class="fas fa-envelope"></i> Email: {{email}}</p>
+    <p><i class="fas fa-envelope"></i> Email: {{user?.email}}</p>
     <p><i class="fas fa-comment"></i> Description: {{profile?.aboutMe}}</p>
   </div>
 
@@ -24,6 +24,6 @@
   <div class="profile-details-activity">
     <h1>Activity</h1>
     <p><i class="fas fa-map-marker-alt"></i> Location: {{ getAddressFromCoords() }}</p>
-    <p><i class="fas fa-signal"></i> Status: </p>
+    <p><i class="fas fa-signal"></i> Status: {{user?.status}} </p>
   </div>
 </div>

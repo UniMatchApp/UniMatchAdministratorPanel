@@ -6,6 +6,7 @@
   background: var(--mainColorBackground);
 }
 
+
 .profile-inside-container{
   display: flex;
   flex:1;
@@ -49,3 +50,5 @@
 .pagination-button:disabled {
   cursor: not-allowed;
 }
+
+
