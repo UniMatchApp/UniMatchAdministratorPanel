@@ -38,8 +38,8 @@ export class MockUserService extends UserService {
     this.totalUsers = this.users.length;
   }
 
-  async getReportsBy(reportType: ReportType = ReportType.All, limit: number = 10, offset: number = 0): Promise<ReportedUser[]> {
-    const reports = this.reports.filter(report => report.predefinedReason === reportType || reportType === ReportType.All);
+  async getReportsBy(reportType: ReportType = ReportType.ALL, limit: number = 10, offset: number = 0): Promise<ReportedUser[]> {
+    const reports = this.reports.filter(report => report.predefinedReason === reportType || reportType === ReportType.ALL);
     this.totalReports = reports.length;
     return reports.slice(offset, limit + offset);
   }

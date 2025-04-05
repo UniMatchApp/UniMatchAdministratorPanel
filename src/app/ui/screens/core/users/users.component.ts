@@ -25,8 +25,7 @@ import {faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons';
 })
 export class UsersComponent implements OnInit {
 
-  @ViewChild(UsersTableComponent) usersTableComponent!: UsersTableComponent; // Agrega la referencia al componente hijo
-
+  @ViewChild(UsersTableComponent) usersTableComponent!: UsersTableComponent;
 
   protected metrics: Metrics[] = [];
   protected usersRows: UsersRow[] = [];
@@ -107,7 +106,6 @@ export class UsersComponent implements OnInit {
     await this.loadUsers(this.currentPage, status);
     this.currentPage = 1;
   }
-
 
   handleSearchChange(searchText: string): void {
     this.searchUserByName(searchText);

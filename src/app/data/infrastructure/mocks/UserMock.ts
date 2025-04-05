@@ -14,14 +14,14 @@ export function createMockUsers() {
                 '0',
                 '1',
                 "2023-10-01",
-                ReportType.Abusive,
+                ReportType.ABUSIVE,
                 'This user is posting spam'
             ),
             new ReportedUser(
                 '1',
                 '2',
                 "2023-10-01",
-                ReportType.Spam,
+                ReportType.SPAM,
                 'This user is posting offensive content'
             )
         ],

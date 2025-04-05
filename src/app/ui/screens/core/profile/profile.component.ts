@@ -58,7 +58,7 @@ export class ProfileComponent implements OnInit {
     try {
       await this.userService.loadReports();
       await this.loadReports(this.currentPage);
-      const reports = await this.userService.getReportsBy(ReportType.All, this.pageSize, (this.currentPage-1)*this.pageSize);
+      const reports = await this.userService.getReportsBy(ReportType.ALL, this.pageSize, (this.currentPage-1)*this.pageSize);
       this.reportRows = await Promise.all(
         reports.map(async (report) => {
           const reportedUserProfile = await this.profileService.getProfileInfo(report.reportedUserId);
@@ -77,7 +77,7 @@ export class ProfileComponent implements OnInit {
   }
 
   private parseReportTypeEnum(reportType: string) {
-    return ReportType[reportType as keyof typeof ReportType] || ReportType.All;
+    return ReportType[reportType as keyof typeof ReportType] || ReportType.ALL;
   }
 
   async loadReports(page: number, reportType: string = 'All'): Promise<void> {

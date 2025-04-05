@@ -11,7 +11,6 @@ export class LoginService {
 
   private isLoggedIn = new BehaviorSubject<boolean>(false);
 
-
   private loginObjectSubject = new BehaviorSubject<string | undefined>(undefined);
 
   constructor(

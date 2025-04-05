@@ -76,13 +76,9 @@ export class UserController {
     );
   }
 
-
-
   getCurrentUser(): Observable<User> {
     return this.http.get<User>(`${this.apiURL}/current`);
   }
-
-
 
   getUsersByName(name: string, limit: number = 10, offset: number = 0): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiURL}/users/search`, { params: { name, limit: limit.toString(), offset: offset.toString() } });
@@ -100,7 +96,7 @@ export class UserController {
     return this.http.get<Metrics[]>(`${this.apiURL}/metrics`);
   }
 
-  getReportsBy(reportType : ReportType = ReportType.All, limit: number = 10, offset: number = 0): Observable<ReportedUser[]> {
+  getReportsBy(reportType : ReportType = ReportType.ABUSIVE, limit: number = 10, offset: number = 0): Observable<ReportedUser[]> {
     return this.http.get<ReportedUser[]>(`${this.apiURL}/reports`, { params: { reportType, limit: limit.toString(), offset: offset.toString() } });
   }
 
@@ -112,8 +108,19 @@ export class UserController {
     return this.http.get<number>(`${this.apiURL}/reports/total`);
   }
 
-  loadReports(): Observable<ReportedUser[]> {
-    return this.http.get<ReportedUser[]>(`${this.apiURL}/reports`);
+  loadReports(): Observable<ReportedUserDto[]> {
+    return this.http.get<{ value: ReportedUserDto[] }>(`${this.apiURL}/reports`).pipe(
+      map((response) =>
+        response.value.map(report => ({
+          id: report.id,
+          reportedUserId: report.reportedUserId,
+          predefinedReason: report.predefinedReason,
+          details: report.details,
+          comment: report.comment || '',
+          createdAt: report.createdAt
+        }))
+      )
+    );
   }
 
   logout(): Observable<void> {
@@ -121,4 +128,13 @@ export class UserController {
   }
 
 
+}
+
+export interface ReportedUserDto {
+  id: string;
+  reportedUserId: string;
+  predefinedReason: string;
+  details: string;
+  comment?: string;
+  createdAt: string;
 }

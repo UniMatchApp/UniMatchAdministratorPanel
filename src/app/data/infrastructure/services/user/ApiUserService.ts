@@ -61,7 +61,7 @@ export class ApiUserService extends UserService {
         reportedUserId,
         "",
         new Date().toISOString(),
-        ReportType.All,
+        ReportType.ALL,
         "",
         "",
       )),
@@ -73,7 +73,7 @@ export class ApiUserService extends UserService {
   }
 
 
-  async getReportsBy(reportType: ReportType = ReportType.All, limit: number = 10, offset: number = 0): Promise<ReportedUser[]> {
+  async getReportsBy(reportType: ReportType = ReportType.ALL, limit: number = 10, offset: number = 0): Promise<ReportedUser[]> {
     throw new Error('Method not implemented.');
   }
 
@@ -105,8 +105,19 @@ export class ApiUserService extends UserService {
     return this.totalUsers;
   }
 
+
   async loadReports(): Promise<void> {
-    throw new Error('Method not implemented.');
+    const response = await firstValueFrom(this.userController.loadReports());
+
+    this.reports = response.map(report => new ReportedUser(
+      report.id,
+      report.reportedUserId,
+      report.createdAt,
+      ReportType[report.predefinedReason as keyof typeof ReportType],
+      report.details,
+      report.comment,
+    ));
+    console.log("reports", this.reports);
   }
   async getTotalReportsNumber(): Promise<number> {
     throw new Error('Method not implemented.');

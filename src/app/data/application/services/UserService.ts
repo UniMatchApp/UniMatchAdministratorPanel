@@ -42,10 +42,10 @@ export class Metrics {
 }
 
 export enum ReportType {
-  All = 'All',
-  Spam = 'Spam',
-  Inappropriate = 'Inappropriate',
-  Abusive = 'Abusive',
+  ALL = 'ALL',
+  SPAM = 'SPAM',
+  INAPPROPRIATE = 'INAPPROPRIATE',
+  ABUSIVE = 'ABUSIVE',
 }
 
 @Injectable({
