@@ -74,11 +74,22 @@ export class ApiUserService extends UserService {
 
 
   async getReportsBy(reportType: ReportType = ReportType.ALL, limit: number = 10, offset: number = 0): Promise<ReportedUser[]> {
-    throw new Error('Method not implemented.');
+    const filteredReports = this.reports.filter(report => report.predefinedReason === reportType || reportType === ReportType.ALL);
+    this.totalReports = filteredReports.length;
+
+    const paginatedReports = filteredReports.slice(offset, offset + limit);
+
+    return paginatedReports;
   }
 
-  async getUserReports(): Promise<ReportedUser[]> {
-    throw new Error('Method not implemented.');
+
+  async getUserReports(id: string, reportType: ReportType = ReportType.ALL, limit: number, offset: number): Promise<ReportedUser[]> {
+    const filteredReports = this.reports.filter(report => (report.predefinedReason === reportType || reportType === ReportType.ALL) && report.reportingUserId === id);
+    this.totalReports = filteredReports.length;
+
+    const paginatedReports = filteredReports.slice(offset, offset + limit);
+
+    return paginatedReports;
   }
 
   async getStadistics(): Promise<Statistics[]> {
@@ -117,10 +128,11 @@ export class ApiUserService extends UserService {
       report.details,
       report.comment,
     ));
+    this.totalReports = this.reports.length;
     console.log("reports", this.reports);
   }
   async getTotalReportsNumber(): Promise<number> {
-    throw new Error('Method not implemented.');
+    return this.totalReports;
   }
 
 

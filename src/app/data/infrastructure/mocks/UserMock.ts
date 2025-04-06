@@ -14,7 +14,7 @@ export function createMockUsers() {
                 '0',
                 '1',
                 "2023-10-01",
-                ReportType.ABUSIVE,
+                ReportType.HARASSMENT,
                 'This user is posting spam'
             ),
             new ReportedUser(

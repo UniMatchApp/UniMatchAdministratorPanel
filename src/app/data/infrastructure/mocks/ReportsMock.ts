@@ -3,8 +3,8 @@ import { ReportType } from '../../application/services/UserService';
 
 const REPORT_MESSAGES: Record<Exclude<ReportType, ReportType.ALL>, string> = {
   [ReportType.SPAM]: 'This user is posting spam content',
-  [ReportType.INAPPROPRIATE]: 'This user is sharing inappropriate content',
-  [ReportType.ABUSIVE]: 'This user is being abusive towards others',
+  [ReportType.HARASSMENT]: 'This user is sharing inappropriate content',
+  [ReportType.INAPPROPRIATE_CONTENT]: 'This user is being abusive towards others',
 };
 
 export function createMockReports(): ReportedUser[] {

@@ -44,8 +44,8 @@ export class Metrics {
 export enum ReportType {
   ALL = 'ALL',
   SPAM = 'SPAM',
-  INAPPROPRIATE = 'INAPPROPRIATE',
-  ABUSIVE = 'ABUSIVE',
+  INAPPROPRIATE_CONTENT = 'INAPPROPRIATE_CONTENT',
+  HARASSMENT = 'HARASSMENT',
 }
 
 @Injectable({
@@ -57,7 +57,7 @@ export abstract class UserService {
   abstract getCurrentUser(id: string): Promise<User | undefined>;
   abstract loadAllUsers(): Promise<void>;
   abstract getReportsBy(reportType: ReportType, limit: number, offset: number): Promise<ReportedUser[]>;
-  abstract getUserReports(): Promise<ReportedUser[]>;
+  abstract getUserReports(id: string, reportType: ReportType, limit: number, offset: number): Promise<ReportedUser[]>;
   abstract getMetrics(): Promise<Metrics[]>;
   abstract getStadistics(): Promise<Statistics[]>;
   abstract getUsersByName(name: string, limit: number, offset: number): Promise<User[]>;

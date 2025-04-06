@@ -96,7 +96,7 @@ export class UserController {
     return this.http.get<Metrics[]>(`${this.apiURL}/metrics`);
   }
 
-  getReportsBy(reportType : ReportType = ReportType.ABUSIVE, limit: number = 10, offset: number = 0): Observable<ReportedUser[]> {
+  getReportsBy(reportType : ReportType = ReportType.ALL, limit: number = 10, offset: number = 0): Observable<ReportedUser[]> {
     return this.http.get<ReportedUser[]>(`${this.apiURL}/reports`, { params: { reportType, limit: limit.toString(), offset: offset.toString() } });
   }
 

@@ -42,11 +42,14 @@ export class ProfileComponent implements OnInit {
 
   async ngOnInit() {
     this.route.queryParams.subscribe(async params => {
-      const userId =  this.route.snapshot.paramMap.get('id');
+      const userId = this.route.snapshot.paramMap.get('id');
       if (userId) {
         try {
           this.profile = await this.profileService.getProfile(userId);
           this.user = await this.userService.getCurrentUser(userId);
+
+          // Mueve la carga de los reportes aquí
+          await this.loadUserReports(userId);
         } catch (error) {
           console.error('Error al obtener el perfil:', error);
         }
@@ -54,11 +57,14 @@ export class ProfileComponent implements OnInit {
         console.warn('No se proporcionó un ID de usuario en los parámetros de la URL.');
       }
     });
+  }
 
+  async loadUserReports(userId: string) {
     try {
       await this.userService.loadReports();
       await this.loadReports(this.currentPage);
-      const reports = await this.userService.getReportsBy(ReportType.ALL, this.pageSize, (this.currentPage-1)*this.pageSize);
+      const reports = await this.userService.getUserReports(userId, ReportType.ALL, this.pageSize, (this.currentPage-1)*this.pageSize);
+
       this.reportRows = await Promise.all(
         reports.map(async (report) => {
           const reportedUserProfile = await this.profileService.getProfileInfo(report.reportedUserId);
@@ -75,6 +81,7 @@ export class ProfileComponent implements OnInit {
       console.error('Error al obtener los reportes:', error);
     }
   }
+
 
   private parseReportTypeEnum(reportType: string) {
     return ReportType[reportType as keyof typeof ReportType] || ReportType.ALL;

@@ -25,4 +25,15 @@ interface Report {
 export class ReportsListComponent {
 
   @Input() reports: ReportRow[] = [];
+
+  IsoStringToString(date: string): string {
+    const formattedDate = new Date(date).toLocaleDateString('es-ES', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+
+    const [day, month, year] = formattedDate.split('/');
+    return `${day}/${month}/${year}`;
+  }
 }
