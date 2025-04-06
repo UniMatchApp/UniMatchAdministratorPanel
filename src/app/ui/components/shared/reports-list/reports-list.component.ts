@@ -27,6 +27,7 @@ export class ReportsListComponent {
   @Input() reports: ReportRow[] = [];
 
   IsoStringToString(date: string): string {
+    console.log(date);
     const formattedDate = new Date(date).toLocaleDateString('es-ES', {
       year: 'numeric',
       month: '2-digit',

@@ -40,15 +40,13 @@ export class ProfileComponent implements OnInit {
     private router: Router
   ) {}
 
-  async ngOnInit() {
-    this.route.queryParams.subscribe(async params => {
-      const userId = this.route.snapshot.paramMap.get('id');
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(async (params) => {
+      const userId = params.get('id');
       if (userId) {
         try {
           this.profile = await this.profileService.getProfile(userId);
           this.user = await this.userService.getCurrentUser(userId);
-
-          // Mueve la carga de los reportes aquí
           await this.loadUserReports(userId);
         } catch (error) {
           console.error('Error al obtener el perfil:', error);
@@ -59,12 +57,13 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+
   async loadUserReports(userId: string) {
     try {
       await this.userService.loadReports();
       await this.loadReports(this.currentPage);
       const reports = await this.userService.getUserReports(userId, ReportType.ALL, this.pageSize, (this.currentPage-1)*this.pageSize);
-
+      this.totalReports = await this.userService.getTotalReportsNumber();
       this.reportRows = await Promise.all(
         reports.map(async (report) => {
           const reportedUserProfile = await this.profileService.getProfileInfo(report.reportedUserId);
@@ -87,7 +86,7 @@ export class ProfileComponent implements OnInit {
     return ReportType[reportType as keyof typeof ReportType] || ReportType.ALL;
   }
 
-  async loadReports(page: number, reportType: string = 'All'): Promise<void> {
+  async loadReports(page: number, reportType: ReportType = ReportType.ALL): Promise<void> {
     const offset = (page - 1) * this.pageSize;
     try {
       const reportTypeEnum = this.parseReportTypeEnum(reportType)

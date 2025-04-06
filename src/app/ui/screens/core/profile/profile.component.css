@@ -18,6 +18,10 @@
   background: var(--mainColor);
 }
 
+/* TODO, hacer que esté hardcodeado */
+app-profile-details {
+  flex: 0 0 30%;
+}
 
 .profile-table{
   display: flex;

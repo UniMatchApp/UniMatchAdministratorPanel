@@ -1,14 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import { ReportsFiltersComponent } from '../../../components/core/reports/reports-filters/reports-filters.component';
-import { ReportsListComponent } from '../../../components/shared/reports-list/reports-list.component';
-import { MockUserService } from '../../../../data/infrastructure/services/user/MockUserService';
-import { ReportedUser } from '../../../../data/domain/models/ReportedUser';
+import {ReportsFiltersComponent} from '../../../components/core/reports/reports-filters/reports-filters.component';
+import {ReportsListComponent} from '../../../components/shared/reports-list/reports-list.component';
+import {ReportedUser} from '../../../../data/domain/models/ReportedUser';
 import {ProfileInfo, ProfileService} from '../../../../data/application/services/ProfileService';
-import { MockProfileService } from '../../../../data/infrastructure/services/profile/MockProfileService';
 import {ReportType, UserService} from '../../../../data/application/services/UserService';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 import {faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons';
-import {Status} from '../users/users.component';
 
 @Component({
   selector: 'app-reports',
@@ -28,7 +25,7 @@ export class ReportsComponent implements OnInit{
   currentPage: number = 1;
   pageSize: number = 8;
   totalReports: number = 0;
-  selectedReportType: string = 'All';
+  selectedReportType: ReportType = ReportType.ALL;
 
   protected readonly faArrowRight = faArrowRight;
   protected readonly faArrowLeft = faArrowLeft;
@@ -52,11 +49,10 @@ export class ReportsComponent implements OnInit{
     return ReportType[reportType as keyof typeof ReportType] || ReportType.ALL;
   }
 
-  async loadReports(page: number, reportType: string = 'All'): Promise<void> {
+  async loadReports(page: number): Promise<void> {
     const offset = (page - 1) * this.pageSize;
     try {
-      const reportTypeEnum = this.parseReportTypeEnum(reportType)
-      const reports = await this.userService.getReportsBy(reportTypeEnum, this.pageSize, offset);
+      const reports = await this.userService.getReportsBy(this.selectedReportType, this.pageSize, offset);
 
       this.reportRows = await Promise.all(
         reports.map(async (report) => {
@@ -77,10 +73,9 @@ export class ReportsComponent implements OnInit{
   }
 
   onFilterTypeChanged(selectedType: string) {
-    this.selectedReportType = selectedType;
-    const parsedType = this.parseReportTypeEnum(selectedType);
+    this.selectedReportType = this.parseReportTypeEnum(selectedType);
     this.currentPage = 1;
-    this.loadReports(this.currentPage, parsedType);
+    this.loadReports(this.currentPage);
 
   }
 

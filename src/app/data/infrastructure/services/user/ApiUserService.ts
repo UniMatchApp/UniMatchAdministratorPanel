@@ -84,7 +84,7 @@ export class ApiUserService extends UserService {
 
 
   async getUserReports(id: string, reportType: ReportType = ReportType.ALL, limit: number, offset: number): Promise<ReportedUser[]> {
-    const filteredReports = this.reports.filter(report => (report.predefinedReason === reportType || reportType === ReportType.ALL) && report.reportingUserId === id);
+    const filteredReports = this.reports.filter(report => (report.predefinedReason === reportType || reportType === ReportType.ALL) && report.reportingUserId === id || report.reportedUserId === id);
     this.totalReports = filteredReports.length;
 
     const paginatedReports = filteredReports.slice(offset, offset + limit);
