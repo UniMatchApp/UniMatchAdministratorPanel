@@ -48,7 +48,7 @@ export class UsersComponent implements OnInit {
       await Promise.all([
             this.userService.loadAllUsers(),
             this.totalUsers = await this.userService.getTotalUsersNumber(),
-            // this.metrics = await this.userService.getMetrics()
+            this.metrics = await this.userService.getMetrics()
       ]);
       await this.loadUsers(this.currentPage);
     } catch (error) {
@@ -163,12 +163,3 @@ export enum Status {
   Inactive = 'Inactive'
 }
 
-
-export interface UserDTO {
-  id: string;
-  email: string;
-  registered: boolean;
-  registrationDate: string;
-  blockedUsers: string[];
-  reportedUsers: string[];
-}

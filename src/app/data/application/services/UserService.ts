@@ -32,12 +32,10 @@ export class Statistics {
 export class Metrics {
   title: string;
   value: number;
-  percetage: number;
 
-  constructor(title: string, value: number, percetage: number) {
+  constructor(title: string, value: number) {
     this.title = title;
     this.value = value;
-    this.percetage = percetage;
   }
 }
 

@@ -1,4 +1,4 @@
-import {Metrics, ReportType, Statistics, UserService} from '../../../application/services/UserService';
+import {Metrics, ReportType, Statistics, Stats, UserService} from '../../../application/services/UserService';
 import {User} from '../../../domain/models/User';
 import {ReportedUser} from '../../../domain/models/ReportedUser';
 import {UserController} from '../../../controller/UserController';
@@ -50,8 +50,10 @@ export class ApiUserService extends UserService {
   }
 
   async loadAllUsers(): Promise<void> {
+    if(this.totalUsers > 0) {
+      return
+    }
     const userDTOs = await firstValueFrom(this.userController.loadAllUsers());
-    console.log(userDTOs);
     this.users = userDTOs.map(userDTO =>
       new User(
         userDTO.id,
@@ -68,11 +70,7 @@ export class ApiUserService extends UserService {
         )),
         userDTO.registered,
         userDTO.registered ? Status.Active : Status.Inactive
-    ));
-
-    console.log(this.users)
-
-
+      ));
     this.totalUsers = this.users.length;
   }
 
@@ -97,11 +95,25 @@ export class ApiUserService extends UserService {
   }
 
   async getStadistics(): Promise<Statistics[]> {
-    throw new Error('Method not implemented.');
+    const statistics: Statistics[] = [
+      new Statistics('Users by gender', '', ['Gender', 'Users', 'Active'], [
+        new Stats('Men', 2400, 1235),
+        new Stats('Woman', 2400, 1235),
+        new Stats('Non-binary', 2400, 1235),
+        new Stats('Other', 2400, 1235)
+      ])
+    ];
+    return statistics;
   }
 
   async getMetrics(): Promise<Metrics[]> {
-    throw new Error('Method not implemented.');
+    const metrics: Metrics[] = [
+      new Metrics('Total Users', this.totalUsers),
+      new Metrics('Total Reports', this.totalReports),
+      new Metrics('Active users', this.users.filter(user => user.status === Status.Active).length),
+    ];
+
+    return metrics;
   }
 
   async getUsersByName(name: string, limit: number = 10, offset: number = 0): Promise<User[]> {
@@ -122,6 +134,9 @@ export class ApiUserService extends UserService {
 
 
   async loadReports(): Promise<void> {
+    if(this.reports.length > 0) {
+      return;
+    }
     const response = await firstValueFrom(this.userController.loadReports());
 
     this.reports = response.map(report => new ReportedUser(

@@ -1,20 +1,10 @@
 <div class="dashboard-metric-container">
-  <div class="filter-date">
-    <p>Filter by date</p>
-    <input class="filter-date-box" type="date" />
-    <p>to</p>
-    <input class="filter-date-box" type="date" />
-  </div>
   <div class="dashboard-metrics">
     <div *ngFor="let metric of metrics; let i = index"
          class="dashboard-metric-unit"
          [ngStyle]="{'background-color': colors[i] + '80'}">
       <p class="dashboard-metric-title">{{ metric.title }}</p>
       <p class="dashboard-metric-value">{{ metric.value }}</p>
-      <p class="dashboard-metric-percentage">
-        {{ metric.percetage }}%
-        <fa-icon [icon]="getArrowIcon(metric.percetage)"></fa-icon>
-      </p>
     </div>
   </div>
 </div>

@@ -7,7 +7,8 @@ import {
 } from '../../../components/core/dashboard/dashboard-users-stats/dashboard-users-stats.component';
 import {NgForOf} from '@angular/common';
 import {MockUserService} from '../../../../data/infrastructure/services/user/MockUserService';
-import {Metrics, Statistics} from '../../../../data/application/services/UserService';
+import {Metrics, Statistics, UserService} from '../../../../data/application/services/UserService';
+import {MatchingService} from '../../../../data/application/services/MatchingService';
 @Component({
   selector: 'app-dashboard',
   imports: [
@@ -28,11 +29,27 @@ export class DashboardComponent implements OnInit{
   protected stats: Statistics[] = [];
   protected metrics: Metrics[] = [];
 
-  constructor(private userService: MockUserService) {}
+  constructor(
+    private userService: UserService,
+    private matchingService: MatchingService,
+  ) {}
 
   async ngOnInit() {
-    this.stats = await this.userService.getStadistics();
-    this.metrics = await this.userService.getMetrics();
+    await this.userService.loadAllUsers();
+    await this.userService.loadReports();
+
+    const [stats, userMetrics, totalMatches] = await Promise.all([
+      this.userService.getStadistics(),
+      this.userService.getMetrics(),
+      this.matchingService.getTotalMatchesNumber()
+    ]);
+
+    this.stats = stats;
+    this.metrics = [
+      ...userMetrics,
+      new Metrics('Total matches', totalMatches)
+    ];
   }
+
 
 }

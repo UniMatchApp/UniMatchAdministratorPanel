@@ -10,7 +10,6 @@ import {FaIconComponent} from '@fortawesome/angular-fontawesome';
   imports: [
     NgForOf,
     NgStyle,
-    FaIconComponent,
   ],
   templateUrl: './dashboard-metrics.component.html',
   standalone: true,
@@ -25,10 +24,5 @@ export class DashboardMetricsComponent {
   @Input() metrics: Metrics[] = [];
 
   constructor() {}
-
-  getArrowIcon(percentage: number) {
-    return percentage >= 0 ? this.faArrowUp : this.faArrowDown;
-  }
-
 
 }

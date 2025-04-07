@@ -74,9 +74,9 @@ export function createStadistics(): Statistics[] {
 
 export function createMetrics(): Metrics[] {
   return [
-    new Metrics('Users', 100, 5.2),
-    new Metrics('Users', 0, 5.2),
-    new Metrics('Matches', 0, -3.2),
-    new Metrics('Uploads', 0, 2.2),
+    new Metrics('Users', 100),
+    new Metrics('Users', 0),
+    new Metrics('Matches', 0),
+    new Metrics('Uploads', 0),
   ];
 }

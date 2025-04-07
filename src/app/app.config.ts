@@ -8,6 +8,8 @@ import {MockProfileService} from './data/infrastructure/services/profile/MockPro
 import {ProfileService} from './data/application/services/ProfileService';
 import {ApiUserService} from './data/infrastructure/services/user/ApiUserService';
 import {ApiProfileService} from './data/infrastructure/services/profile/ApiProfileService';
+import {MatchingService} from './data/application/services/MatchingService';
+import {ApiMatchingService} from './data/infrastructure/services/matching/ApiMatchingService';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,5 +18,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     { provide: UserService, useClass: ApiUserService, deps: [HttpClient] },
     { provide: ProfileService, useClass: ApiProfileService, deps: [HttpClient] },
+    { provide: MatchingService, useClass: ApiMatchingService, deps: [HttpClient] }
   ],
 };
