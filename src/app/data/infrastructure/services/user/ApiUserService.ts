@@ -51,7 +51,7 @@ export class ApiUserService extends UserService {
 
   async loadAllUsers(): Promise<void> {
     const userDTOs = await firstValueFrom(this.userController.loadAllUsers());
-
+    console.log(userDTOs);
     this.users = userDTOs.map(userDTO =>
       new User(
         userDTO.id,
@@ -69,6 +69,8 @@ export class ApiUserService extends UserService {
         userDTO.registered,
         userDTO.registered ? Status.Active : Status.Inactive
     ));
+
+    console.log(this.users)
 
 
     this.totalUsers = this.users.length;

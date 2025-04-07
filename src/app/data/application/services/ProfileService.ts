@@ -12,14 +12,19 @@ export abstract class ProfileService {
 export class ProfileInfo {
   id: string;
   name: string;
-
   email: string;
-  avatar: string
+  avatar: string;
 
-  constructor(id: string, name: string, email: string, avatar: string) {
+  constructor(
+    id: string,
+    email: string,
+    name: string = "User",
+    avatar: string = "/assets/img/blank-profile-picture-973460_1280.webp"
+  ) {
     this.id = id;
-    this.name = name;
     this.email = email;
+    this.name = name;
     this.avatar = avatar;
   }
 }
+

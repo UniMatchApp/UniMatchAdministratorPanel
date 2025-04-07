@@ -10,5 +10,7 @@ export class User {
     public reportedUsers: ReportedUser[] = [],
     public registered: boolean = false,
     public status: Status = Status.All,
-  ) {}
+  ) {
+
+  }
 }

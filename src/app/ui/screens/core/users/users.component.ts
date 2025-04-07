@@ -63,14 +63,25 @@ export class UsersComponent implements OnInit {
       const users = await this.userService.getUserByStatus(parsedStatus, this.pageSize, offset);
       this.usersRows = await Promise.all(
         users.map(async user => {
-          const profile = await this.profileService.getProfileInfo(user.id);
-          return {
-            User: profile,
-            Email: user.email,
-            Reported: user.reportedUsers.length,
-            Status: user.status,
-            RegistrationDate: user.registrationDate
-          };
+          if(user.registered) {
+            const profile = await this.profileService.getProfileInfo(user.id);
+            return {
+              User: profile,
+              Email: user.email,
+              Reported: user.reportedUsers.length,
+              Status: user.status,
+              RegistrationDate: user.registrationDate
+            };
+          } else {
+            return {
+              User: new ProfileInfo(user.id, user.email),
+              Email: user.email,
+              Reported: user.reportedUsers.length,
+              Status: user.status,
+              RegistrationDate: user.registrationDate
+            };
+          }
+
         })
       );
       this.totalUsers = await this.userService.getTotalUsersNumber();
@@ -150,4 +161,14 @@ export enum Status {
   All = 'All',
   Active = 'Active',
   Inactive = 'Inactive'
+}
+
+
+export interface UserDTO {
+  id: string;
+  email: string;
+  registered: boolean;
+  registrationDate: string;
+  blockedUsers: string[];
+  reportedUsers: string[];
 }
