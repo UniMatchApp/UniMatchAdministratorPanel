@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {map, Observable, tap} from 'rxjs';
-import {Metrics, ReportType, Statistics} from '../application/services/UserService';
+import {Metrics, ReportType, Statistics, Stats} from '../application/services/UserService';
 import {ReportedUser} from '../domain/models/ReportedUser';
 import {User} from '../domain/models/User';
 import {response} from 'express';
@@ -89,8 +89,17 @@ export class UserController {
   }
 
   getStadistics(): Observable<Statistics[]> {
-    return this.http.get<Statistics[]>(`${this.apiURL}/statistics`);
+    return this.http.get<StatisticsResponseDTO>(`${this.apiURL}/statistics`).pipe(
+      map(response => {
+        return response.value.map((rawStat: RawStatisticsDTO) => new Statistics(
+          rawStat.title,
+          rawStat.columns,
+          rawStat.stats.map((s: RawStatsDTO) => new Stats(s.stat, s.total_users, s.active_users))
+        ));
+      })
+    );
   }
+
 
   getMetrics(): Observable<Metrics[]> {
     return this.http.get<Metrics[]>(`${this.apiURL}/metrics`);
@@ -138,3 +147,22 @@ export interface ReportedUserDto {
   comment?: string;
   createdAt: string;
 }
+
+export interface RawStatsDTO {
+  stat: string;
+  total_users: number;
+  active_users: number;
+}
+
+export interface RawStatisticsDTO {
+  title: string;
+  columns: string[];
+  stats: RawStatsDTO[];
+}
+
+export interface StatisticsResponseDTO {
+  value: RawStatisticsDTO[];
+  success: boolean;
+  error: string | null;
+}
+

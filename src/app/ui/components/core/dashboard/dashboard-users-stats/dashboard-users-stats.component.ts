@@ -6,7 +6,6 @@ import {Statistics} from '../../../../../data/application/services/UserService';
   selector: 'app-dashboard-users-stats',
   imports: [
     NgForOf,
-    NgIf
   ],
   templateUrl: './dashboard-users-stats.component.html',
   standalone: true,

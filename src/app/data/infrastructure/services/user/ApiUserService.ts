@@ -95,15 +95,7 @@ export class ApiUserService extends UserService {
   }
 
   async getStadistics(): Promise<Statistics[]> {
-    const statistics: Statistics[] = [
-      new Statistics('Users by gender', '', ['Gender', 'Users', 'Active'], [
-        new Stats('Men', 2400, 1235),
-        new Stats('Woman', 2400, 1235),
-        new Stats('Non-binary', 2400, 1235),
-        new Stats('Other', 2400, 1235)
-      ])
-    ];
-    return statistics;
+    return await firstValueFrom(this.userController.getStadistics());
   }
 
   async getMetrics(): Promise<Metrics[]> {

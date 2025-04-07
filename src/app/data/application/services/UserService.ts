@@ -17,13 +17,11 @@ export class Stats {
 
 export class Statistics {
   title: string;
-  image: string;
   columns: string[];
   table: Stats[];
 
-  constructor(title: string, image: string, columns: string[], table: Stats[]) {
+  constructor(title: string, columns: string[], table: Stats[]) {
     this.title = title;
-    this.image = image;
     this.columns = columns;
     this.table = table;
   }

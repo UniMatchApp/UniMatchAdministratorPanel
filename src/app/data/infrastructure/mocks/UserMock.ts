@@ -41,7 +41,7 @@ export function createMocksUsers() {
 
 export function createStadistics(): Statistics[] {
   return [
-    new Statistics('Most Active Countries', 'assets/asia.png', ['Country', 'Users', 'Active'], [
+    new Statistics('Most Active Countries',  ['Country', 'Users', 'Active'], [
       new Stats('China', 2400, 1235),
       new Stats('China', 2400, 1235),
       new Stats('China', 2400, 1235),
@@ -53,18 +53,18 @@ export function createStadistics(): Statistics[] {
       new Stats('China', 2400, 1235),
       new Stats('China', 2400, 1235)
     ]),
-    new Statistics('Users by gender', '', ['Gender', 'Users', 'Active'], [
+    new Statistics('Users by gender',  ['Gender', 'Users', 'Active'], [
       new Stats('Men', 2400, 1235),
       new Stats('Woman', 2400, 1235),
       new Stats('Non-binary', 2400, 1235),
       new Stats('Other', 2400, 1235)
     ]),
-    new Statistics('Users by relationship', '', ['Relationship', 'Users', 'Active'], [
+    new Statistics('Users by relationship',['Relationship', 'Users', 'Active'], [
       new Stats('Friends', 2400, 1235),
       new Stats('Couple', 2400, 1235),
       new Stats('Others', 2400, 1235)
     ]),
-    new Statistics('Users by orientation', '', ['Orientation', 'Users', 'Active'], [
+    new Statistics('Users by orientation', ['Orientation', 'Users', 'Active'], [
       new Stats('Heterosexual', 2400, 1235),
       new Stats('Homosexual', 2400, 1235),
       new Stats('Other', 2400, 1235)
