@@ -4,6 +4,7 @@ import {ReportedUser} from '../../../domain/models/ReportedUser';
 import {UserController} from '../../../controller/UserController';
 import {firstValueFrom} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
+import {Status} from '../../../../ui/screens/core/users/users.component';
 
 export class ApiUserService extends UserService {
   private users: User[] = [];
@@ -53,19 +54,20 @@ export class ApiUserService extends UserService {
 
     this.users = userDTOs.map(userDTO =>
       new User(
-      userDTO.id,
-      new Date(userDTO.registrationDate),
-      userDTO.email,
-      userDTO.blockedUsers || [],
-      userDTO.reportedUsers.map(reportedUserId => new ReportedUser(
-        reportedUserId,
-        "",
-        new Date().toISOString(),
-        ReportType.ALL,
-        "",
-        "",
-      )),
-      userDTO.registered,
+        userDTO.id,
+        new Date(userDTO.registrationDate),
+        userDTO.email,
+        userDTO.blockedUsers || [],
+        userDTO.reportedUsers.map(reportedUserId => new ReportedUser(
+          reportedUserId,
+          "",
+          new Date().toISOString(),
+          ReportType.ALL,
+          "",
+          "",
+        )),
+        userDTO.registered,
+        userDTO.registered ? Status.Active : Status.Inactive
     ));
 
 
@@ -129,7 +131,6 @@ export class ApiUserService extends UserService {
       report.comment,
     ));
     this.totalReports = this.reports.length;
-    console.log("reports", this.reports);
   }
   async getTotalReportsNumber(): Promise<number> {
     return this.totalReports;
