@@ -31,7 +31,7 @@ export class UserController {
 
   login(email: string, password: string): Observable<LoginDTO> {
     return this.http.post<{ value: { token: string, user: any } }>(
-      `${this.apiURL}/auth/login`,
+      `${this.apiURL}/auth/admin/login`,
       { email, password }
     ).pipe(
       map(response => ({
