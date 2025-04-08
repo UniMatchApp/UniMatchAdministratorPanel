@@ -1,9 +1,9 @@
 <div class="reports-filters">
   <div class="filter-date">
     <p>Filter by date</p>
-    <input class="filter-date-box" type="date" />
+    <input class="filter-date-box" type="date" [(ngModel)]="fromDate" (change)="onDateChange()"/>
     <p>to</p>
-    <input class="filter-date-box" type="date" />
+    <input class="filter-date-box" type="date" [(ngModel)]="toDate" (change)="onDateChange()" />
   </div>
   <div class="filter-type">
     <p>Filter by type</p>

@@ -26,6 +26,8 @@ export class ReportsComponent implements OnInit{
   pageSize: number = 8;
   totalReports: number = 0;
   selectedReportType: ReportType = ReportType.ALL;
+  selectedFromDate: string | null = null;
+  selectedToDate: string | null = null;
 
   protected readonly faArrowRight = faArrowRight;
   protected readonly faArrowLeft = faArrowLeft;
@@ -52,7 +54,23 @@ export class ReportsComponent implements OnInit{
   async loadReports(page: number): Promise<void> {
     const offset = (page - 1) * this.pageSize;
     try {
-      const reports = await this.userService.getReportsBy(this.selectedReportType, this.pageSize, offset);
+      let reports = await this.userService.getReportsBy(this.selectedReportType, this.pageSize, offset);
+
+      if (this.selectedFromDate || this.selectedToDate) {
+        reports = reports.filter((report) => {
+          const reportDate = new Date(report.date);
+          const from = this.selectedFromDate ? new Date(this.selectedFromDate) : null;
+          const to = this.selectedToDate ? new Date(this.selectedToDate) : null;
+          if (to) {
+            to.setHours(23, 59, 59, 999);
+          }
+
+          const afterFrom = from ? reportDate >= from : true;
+          const beforeTo = to ? reportDate <= to : true;
+
+          return afterFrom && beforeTo;
+        });
+      }
 
       this.reportRows = await Promise.all(
         reports.map(async (report) => {
@@ -72,8 +90,10 @@ export class ReportsComponent implements OnInit{
     }
   }
 
-  onFilterTypeChanged(selectedType: string) {
-    this.selectedReportType = this.parseReportTypeEnum(selectedType);
+  onFilterTypeChanged(filters: { type: string; fromDate: string | null; toDate: string | null }) {
+    this.selectedReportType = this.parseReportTypeEnum(filters.type);
+    this.selectedFromDate = filters.fromDate;
+    this.selectedToDate = filters.toDate;
     this.currentPage = 1;
     this.loadReports(this.currentPage);
 
