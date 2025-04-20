@@ -10,13 +10,15 @@ import {ReportType, UserService} from '../../../../data/application/services/Use
 import {faArrowLeft, faArrowRight} from '@fortawesome/free-solid-svg-icons';
 import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 import {User} from '../../../../data/domain/models/User';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-profile',
   imports: [
     ReportsListComponent,
     ProfileDetailsComponent,
-    FaIconComponent
+    FaIconComponent,
+    NgIf
   ],
   templateUrl: './profile.component.html',
   standalone: true,
@@ -45,8 +47,10 @@ export class ProfileComponent implements OnInit {
       const userId = params.get('id');
       if (userId) {
         try {
-          this.profile = await this.profileService.getProfile(userId);
           this.user = await this.userService.getCurrentUser(userId);
+          if(this.user?.registered) {
+            this.profile = await this.profileService.getProfile(userId);
+          }
           await this.loadUserReports(userId);
         } catch (error) {
           console.error('Error al obtener el perfil:', error);
