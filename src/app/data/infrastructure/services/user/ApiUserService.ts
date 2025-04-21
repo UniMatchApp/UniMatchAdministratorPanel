@@ -10,6 +10,7 @@ export class ApiUserService extends UserService {
   private users: User[] = [];
   private reports: ReportedUser[] = [];
   private totalUsers = 0;
+  private filterUsersNumber = 0;
   private totalReports =  0;
   private userController;
 
@@ -110,18 +111,18 @@ export class ApiUserService extends UserService {
 
   async getUsersByName(name: string, limit: number = 10, offset: number = 0): Promise<User[]> {
     const users = this.users.filter(user => user.email.includes(name));
-    this.totalUsers = users.length;
+    this.filterUsersNumber = users.length;
     return users.slice(offset, offset + limit);
   }
 
   async getUserByStatus(status: string, limit: number = 10, offset: number = 0): Promise<User[]> {
     const users = this.users.filter(user => user.status === status || status === 'All');
-    this.totalUsers = users.length;
+    this.filterUsersNumber = users.length;
     return users.slice(offset, offset + limit);
   }
 
   async getTotalUsersNumber(): Promise<number> {
-    return this.totalUsers;
+    return this.filterUsersNumber;
   }
 
 

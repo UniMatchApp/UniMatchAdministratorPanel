@@ -1,4 +1,4 @@
-<div class="profile-container">
+<div *ngIf="profile" class="profile-container">
   <div class="profile-inside-container">
     <app-profile-details [profile]="profile" [user]="user"></app-profile-details>
     <div class="profile-table">
@@ -24,4 +24,9 @@
       </div>
     </div>
   </div>
+</div>
+
+
+<div *ngIf="!profile " class="not-registered-message">
+    <h1>El usuario no está registrado</h1>
 </div>
