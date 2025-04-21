@@ -93,7 +93,7 @@ export class UsersComponent implements OnInit {
 
   async searchUserByName(name: string): Promise<void> {
     if (name) {
-      const users = await this.userService.getUsersByName(name, this.pageSize, this.currentPage * this.pageSize);
+      const users = await this.userService.getUsersByName(name, this.pageSize, (this.currentPage - 1) * this.pageSize);
 
       this.usersRows = await Promise.all(users.map(async user => {
         return {
