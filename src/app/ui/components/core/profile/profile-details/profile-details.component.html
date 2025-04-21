@@ -24,6 +24,6 @@
   <div class="profile-details-activity">
     <h1>Activity</h1>
     <p><i class="fas fa-map-marker-alt"></i> Location: {{ address }}</p>
-    <p><i class="fas fa-signal"></i> Status: {{user?.status}} </p>
+    <p><i class="fas fa-signal"></i> Status: {{ user?.registered ? 'Active' : 'Inactive' }} </p>
   </div>
 </div>
