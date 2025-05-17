@@ -82,4 +82,15 @@ export class MockUserService extends UserService {
   async validateSession(token: string): Promise<boolean> {
     return true;
   }
+  
+  async deleteUser(userId: string): Promise<void> {
+    // Eliminar el usuario de la lista simulada de usuarios
+    const userIndex = this.users.findIndex(user => user.id === userId);
+    if (userIndex !== -1) {
+      this.users.splice(userIndex, 1);  // Eliminar el usuario de la lista
+      this.totalUsers--;  // Actualizar el total de usuarios
+    } else {
+      console.error(`Usuario con ID ${userId} no encontrado`);
+    }
+  }
 }

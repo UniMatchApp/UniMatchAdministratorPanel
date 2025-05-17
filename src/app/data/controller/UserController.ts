@@ -1,10 +1,17 @@
-import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {map, Observable, tap} from 'rxjs';
-import {Metrics, ReportType, Statistics, Stats} from '../application/services/UserService';
-import {ReportedUser} from '../domain/models/ReportedUser';
-import {User} from '../domain/models/User';
-import {response} from 'express';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { map, Observable, tap } from 'rxjs';
+import { Metrics, ReportType, Statistics, Stats } from '../application/services/UserService';
+import { ReportedUser } from '../domain/models/ReportedUser';
+import { User } from '../domain/models/User';
+
+// Function to capitalize words
+function formatStatName(statName: string): string {
+  return statName.replace(/_/g, ' ')
+                 .split(' ')
+                 .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize the first letter
+                 .join(' ');
+}
 
 export interface UserDTO {
   id: string;
@@ -18,7 +25,6 @@ export interface UserDTO {
 export interface LoginDTO {
   User: UserDTO;
   Token: string;
-
 }
 
 @Injectable({
@@ -34,30 +40,45 @@ export class UserController {
       `${this.apiURL}/auth/admin/login`,
       { email, password }
     ).pipe(
-      map(response => ({
-        Token: response.value.token,
-        User: {
-          id: response.value.user.id,
-          email: response.value.user.email,
-          registered: response.value.user.registered,
-          registrationDate: response.value.user.registrationDate,
-          blockedUsers: response.value.user.blockedUsers || [],
-          reportedUsers: response.value.user.reportedUsers || [],
-        }
-      }))
+      map(response => {
+        const token = response.value.token;
+        sessionStorage.setItem('adminToken', token);
+        return {
+          Token: token,
+          User: {
+            id: response.value.user.id,
+            email: response.value.user.email,
+            registered: response.value.user.registered,
+            registrationDate: response.value.user.registrationDate,
+            blockedUsers: response.value.user.blockedUsers || [],
+            reportedUsers: response.value.user.reportedUsers || [],
+          }
+        };
+      })
     );
   }
 
+  deleteUser(targetId: string): Observable<void> {
+    const token = sessionStorage.getItem('adminToken');  // Retrieve the token from sessionStorage
+
+    if (!token) {
+      throw new Error('Admin token is missing');
+    }
+
+    return this.http.delete<void>(`${this.apiURL}/admin/${targetId}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+  }
+
   validateSession(token: string): Observable<boolean> {
-    return this.http.post<{ valid: boolean } >(
+    return this.http.post<{ valid: boolean }>(
       `${this.apiURL}/auth`,
       { token }
     ).pipe(
-      tap(response => console.log("Response", response)
-      ),
-      map(response => {
-        return response.valid;
-      })
+      tap(response => console.log("Response", response)),
+      map(response => response.valid)
     );
   }
 
@@ -94,18 +115,21 @@ export class UserController {
         return response.value.map((rawStat: RawStatisticsDTO) => new Statistics(
           rawStat.title,
           rawStat.columns,
-          rawStat.stats.map((s: RawStatsDTO) => new Stats(s.stat, s.total_users, s.active_users))
+          rawStat.stats.map((s: RawStatsDTO) => new Stats(
+            formatStatName(s.stat),
+            s.total_users,
+            s.active_users
+          ))
         ));
       })
     );
   }
 
-
   getMetrics(): Observable<Metrics[]> {
     return this.http.get<Metrics[]>(`${this.apiURL}/metrics`);
   }
 
-  getReportsBy(reportType : ReportType = ReportType.ALL, limit: number = 10, offset: number = 0): Observable<ReportedUser[]> {
+  getReportsBy(reportType: ReportType = ReportType.ALL, limit: number = 10, offset: number = 0): Observable<ReportedUser[]> {
     return this.http.get<ReportedUser[]>(`${this.apiURL}/reports`, { params: { reportType, limit: limit.toString(), offset: offset.toString() } });
   }
 
@@ -135,8 +159,6 @@ export class UserController {
   logout(): Observable<void> {
     return this.http.post<void>(`${this.apiURL}/logout`, {});
   }
-
-
 }
 
 export interface ReportedUserDto {
@@ -165,4 +187,3 @@ export interface StatisticsResponseDTO {
   success: boolean;
   error: string | null;
 }
-

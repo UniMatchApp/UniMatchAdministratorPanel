@@ -16,8 +16,11 @@
 
 
 .dashboard-lists {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
+  flex-wrap: wrap; /* Permite que las tarjetas se ajusten al contenedor */
+  justify-content: center; /* Centra las tarjetas en el eje horizontal */
+  gap: 10px; /* Espacio entre las tarjetas */
   width: 100%;
-  gap: 10px;
+  padding-top: 20px;
 }
+

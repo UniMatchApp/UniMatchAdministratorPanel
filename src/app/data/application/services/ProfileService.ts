@@ -14,6 +14,7 @@ export class ProfileInfo {
   name: string;
   email: string;
   avatar: string;
+  selected: boolean = false;
 
   constructor(
     id: string,

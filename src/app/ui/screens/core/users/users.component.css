@@ -100,3 +100,20 @@ h2 {
   cursor: not-allowed;
 }
 
+.users-table button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.users-table button:hover {
+  background-color: #e60000;
+}
+
+.users-table button:focus {
+  outline: none;
+}

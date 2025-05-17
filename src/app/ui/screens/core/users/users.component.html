@@ -25,11 +25,17 @@
             </div>
           </div>
         </div>
-        <app-users-table
-          [users]="usersRows">
+
+        <app-users-table 
+          [users]="usersRows"
+          (userSelected)="selectUser($event)"
+          (deleteUsers)="deleteUsers($event)">
         </app-users-table>
 
+
+
       </div>
+
       <div class="pagination">
         <button
           class="pagination-button"

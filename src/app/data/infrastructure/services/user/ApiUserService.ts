@@ -146,5 +146,20 @@ export class ApiUserService extends UserService {
     return this.totalReports;
   }
 
+  async deleteUser(userId: string): Promise<void> {
+    try {
+      // Llamar al backend para eliminar el usuario
+      await firstValueFrom(this.userController.deleteUser(userId));
+
+      // Eliminar el usuario de la lista local
+      this.users = this.users.filter(user => user.id !== userId);
+      this.totalUsers--;  // Actualizar el total de usuarios
+
+      console.log(`Usuario con ID ${userId} eliminado exitosamente`);
+    } catch (error) {
+      console.error('Error eliminando el usuario:', error);
+      throw new Error('Error al eliminar el usuario');
+    }
+  }
 
 }

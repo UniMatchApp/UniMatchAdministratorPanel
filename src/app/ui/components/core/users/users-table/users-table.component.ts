@@ -1,12 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import {UsersRow} from '../../../../screens/core/users/users.component';
-import {CheckboxInputComponent} from '../../../shared/checkbox-input/checkbox-input.component';
-import {RouterLink} from '@angular/router';
-import {NgForOf} from '@angular/common';
+import { UsersRow } from '../../../../screens/core/users/users.component';
+import { CheckboxInputComponent } from '../../../shared/checkbox-input/checkbox-input.component';
+import { RouterLink } from '@angular/router';
+import { CommonModule, NgForOf } from '@angular/common';
 
 @Component({
   selector: 'app-users-table',
-  imports: [NgForOf, CheckboxInputComponent, RouterLink],
+  imports: [CommonModule, NgForOf, CheckboxInputComponent, RouterLink],
   templateUrl: './users-table.component.html',
   standalone: true,
   styleUrls: ['./users-table.component.css']
@@ -14,18 +14,27 @@ import {NgForOf} from '@angular/common';
 export class UsersTableComponent {
 
   @Input() users: UsersRow[] = [];
+  @Output() userSelected = new EventEmitter<UsersRow>();
+  @Output() deleteUsers = new EventEmitter<string[]>();
+
   selectAll: boolean = false;
   selectedUsers: UsersRow[] = [];
 
-  toggleUserSelection(user: UsersRow) {
+  deleteSelectedUsers(): void {
+    const selectedUserIds = this.selectedUsers.map(user => user.User.id);  
+    this.deleteUsers.emit(selectedUserIds);
+  }
+
+  toggleUserSelection(user: UsersRow): void {
     const index = this.selectedUsers.findIndex(selected => selected.User.id === user.User.id);
     if (index !== -1) {
-      this.selectedUsers.splice(index, 1);
+      this.selectedUsers.splice(index, 1);  
     } else {
       this.selectedUsers.push(user);
     }
 
     this.updateSelectAllState();
+    this.userSelected.emit(user);  
   }
 
   toggleSelectAll(): void {
@@ -35,10 +44,10 @@ export class UsersTableComponent {
     } else {
       this.selectedUsers = [];
     }
-
+    this.updateSelectAllState();
   }
 
-  updateSelectAllState() {
+  updateSelectAllState(): void {
     this.selectAll = this.selectedUsers.length === this.users.length;
   }
 
@@ -49,4 +58,5 @@ export class UsersTableComponent {
 
     return `${day}/${month}/${year}`;
   }
+
 }
