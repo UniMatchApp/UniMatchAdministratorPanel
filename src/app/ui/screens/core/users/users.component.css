@@ -101,7 +101,7 @@ h2 {
 }
 
 .users-table button {
-  background-color: #ff4d4d;
+  background-color: var(--mainColorBackgroundOpacity);
   color: white;
   border: none;
   padding: 8px 16px;
@@ -111,7 +111,7 @@ h2 {
 }
 
 .users-table button:hover {
-  background-color: #e60000;
+  background-color: var(--mainColorBackground);
 }
 
 .users-table button:focus {

@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {NgForOf} from '@angular/common';
 import {RouterLink} from '@angular/router';
 import {ReportRow} from '../../../screens/core/reports/reports.component';
+import {formatEnums} from '../../../../data/controller/UserController';
 
 interface Report {
   userReporting: { name: string; email: string; avatar: string; id: string };
@@ -36,4 +37,6 @@ export class ReportsListComponent {
     const [day, month, year] = formattedDate.split('/');
     return `${day}/${month}/${year}`;
   }
+
+  protected readonly formatEnums = formatEnums;
 }

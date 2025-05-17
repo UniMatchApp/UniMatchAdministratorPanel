@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Profile} from '../../../../../data/domain/models/Profile';
 import {User} from '../../../../../data/domain/models/User';
+import {formatEnums} from '../../../../../data/controller/UserController';
 
 @Component({
   selector: 'app-profile-details',
@@ -26,7 +27,7 @@ export class ProfileDetailsComponent implements OnInit {
   }
 
   formatUserId(userId?: string): string {
-    if (!userId || userId.length < 6) return userId ?? "N/A"; // Si es muy corto, lo devuelve tal cual
+    if (!userId || userId.length < 6) return userId ?? "N/A";
     return `${userId.slice(0, 4)} **** ${userId.slice(-2)}`;
   }
 
@@ -52,4 +53,5 @@ export class ProfileDetailsComponent implements OnInit {
     }
   }
 
+  protected readonly formatEnums = formatEnums;
 }

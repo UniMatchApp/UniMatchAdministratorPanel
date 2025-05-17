@@ -5,12 +5,13 @@ import { Metrics, ReportType, Statistics, Stats } from '../application/services/
 import { ReportedUser } from '../domain/models/ReportedUser';
 import { User } from '../domain/models/User';
 
-// Function to capitalize words
-function formatStatName(statName: string): string {
-  return statName.replace(/_/g, ' ')
-                 .split(' ')
-                 .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitalize the first letter
-                 .join(' ');
+export function formatEnums(statName: string | undefined): string {
+  return statName
+    ? statName.replace(/_/g, ' ')
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ')
+    : '';
 }
 
 export interface UserDTO {
@@ -116,7 +117,7 @@ export class UserController {
           rawStat.title,
           rawStat.columns,
           rawStat.stats.map((s: RawStatsDTO) => new Stats(
-            formatStatName(s.stat),
+            formatEnums(s.stat),
             s.total_users,
             s.active_users
           ))

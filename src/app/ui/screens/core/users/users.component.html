@@ -26,13 +26,11 @@
           </div>
         </div>
 
-        <app-users-table 
+        <app-users-table
           [users]="usersRows"
           (userSelected)="selectUser($event)"
           (deleteUsers)="deleteUsers($event)">
         </app-users-table>
-
-
 
       </div>
 

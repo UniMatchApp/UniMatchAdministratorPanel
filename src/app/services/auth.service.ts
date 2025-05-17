@@ -23,5 +23,4 @@ export class AuthService {
   isLoggedIn(): Observable<boolean> {
     return from(this.loginService.isLoggedIn$());
   }
-
 }

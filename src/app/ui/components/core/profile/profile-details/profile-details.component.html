@@ -16,9 +16,9 @@
 
   <div class="profile-details">
     <h1>Details</h1>
-    <p><i class="fas fa-venus-mars"></i> Gender: {{profile?.gender}}</p>
+    <p><i class="fas fa-venus-mars"></i> Gender: {{formatEnums(profile?.gender?.toString())}}</p>
     <p><i class="fas fa-birthday-cake"></i> Birthday: {{formattedBirthday}}</p>
-    <p><i class="fas fa-venus-mars"></i> Sexual Orientation: {{profile?.genderPriority}}</p>
+    <p><i class="fas fa-venus-mars"></i> Sexual Orientation: {{formatEnums(profile?.genderPriority?.toString())}}</p>
   </div>
 
   <div class="profile-details-activity">

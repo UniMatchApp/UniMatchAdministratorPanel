@@ -32,7 +32,7 @@
 
     <td>{{ IsoStringToString(report.report.date) }}</td>
 
-    <td>{{ report.report.predefinedReason }}</td>
+    <td>{{ formatEnums(report.report.predefinedReason)  }}</td>
     <td>{{ report.report.details }}</td>
     <td>{{ report.report.comment }}</td>
   </tr>
